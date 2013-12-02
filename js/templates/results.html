@@ -1,11 +1,21 @@
 <h1>YOUR RESULTS</h1>
 
-<h2>Question Set: <%= set %></h2>
-
 <% for (var resultsIndex = 0; resultsIndex < answers.length; resultsIndex++) { %>
 
-  <div><%= questions[resultsIndex].question %></div>
-  <div>Answer for question 1: <%= answers[resultsIndex] %></div>
+  <div class="question-set">
+    <h3><%= model[resultsIndex].question %></h3>
+
+    <h4>Your Answer:</h4>
+    <div><%= model[resultsIndex].choices[answers[resultsIndex]] %></div>
+
+    <% if (typeof(friendAnswers) != 'undefined' && friendAnswers.length > 0) { %>
+      <h4>Your Friend's Answer:</h4>
+      <div><%= model[resultsIndex].choices[friendAnswers[resultsIndex]] %>
+    <% } %>
+    <div style="color: #c9373a">Rest of the world: n/a</div>
+  </div>
 
 <% } %>
 
+<div class="share">Share with Friends</div>
+<div class="restart">Restart</div>

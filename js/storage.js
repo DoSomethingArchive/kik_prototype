@@ -47,5 +47,45 @@ define(function() {
       var newJson = JSON.stringify(data);
       localStorage.setItem(key, newJson);
     },
+
+    /**
+     * Clear any previously existing friend answers.
+     */
+    clearFriendResults: function() {
+      for (var keyIndex = 0; keyIndex < localStorage.length; keyIndex++) {
+        keyName = localStorage.key(keyIndex);
+        if (keyName.substring(0,8) == this.keyBase && keyName.substr(-7) == '_friend') {
+          console.log('Clearing from localStorage: ' + keyName);
+          localStorage.removeItem(keyName);
+        }
+      }
+    },
+
+    /**
+     * Get friend's answers.
+     */
+    getFriendResults: function(set) {
+      var key = this.keyBase + set + '_friend';
+      var data = localStorage.getItem(key);
+      data = data ? JSON.parse(data) : [];
+
+      console.log("\n\nfriend results: [" + key + "] " + JSON.stringify(data));
+
+      return data;
+    },
+
+    /**
+     * Save friend results for a given set of questions.
+     *
+     * @param int set
+     *   Question set.
+     * @param JSONified array answers
+     *   Answers to the question set.
+     */
+    setFriendResults: function(set, answers) {
+      var key = this.keyBase + set + '_friend';
+      var jsonAnswers = JSON.stringify(answers);
+      localStorage.setItem(key, jsonAnswers);
+    }
   };
 });

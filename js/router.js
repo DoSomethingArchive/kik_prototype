@@ -17,17 +17,48 @@ define(
         'results/:setNum': 'showResults',
       },
 
+      // Data received when app is opened from a shared Kik card
+      receivedMessage: {},
+
       initialize: function() {
         Backbone.history.start();
+      },
+
+      /**
+       * Restart the current question set.
+       */
+      restart: function() {
+        window.location.href = window.location.origin + window.location.pathname +
+          '#qset/' + this.getSet() + '/0';
       },
 
       /**
        * Show user's dashboard/home view.
        */
       showDashboard: function() {
-        // @todo Decide whether to start new question set or show user dashboard
-        //   For now, just launch into the qset
-        window.location.href += '#qset/1/0';
+        // Opened through a Kik card message
+        if (cards.kik !== undefined && cards.kik.message) {
+          console.log('\n\nOpened through a Kik card:');
+          console.log('  question set: ' + cards.kik.message.set);
+          console.log('  friend\'s answers: ' + JSON.stringify(cards.kik.message.answers));
+          console.log('\n\n');
+
+          Storage.setFriendResults(cards.kik.message.set, cards.kik.message.answers);
+          var questionSet = cards.kik.message.set;
+
+          var url = window.location.origin + window.location.pathname +
+            '#qset/' + questionSet + '/0';
+          console.log('url: ' + url);
+          window.location.href = url;
+        }
+        else {
+          // Clear any friend results
+          Storage.clearFriendResults();
+
+          // @todo Decide whether to start new question set or show user dashboard
+          //   For now, just launch into the qset
+          window.location.href += '#qset/1/0';
+        }
       },
 
       /**
@@ -63,10 +94,24 @@ define(
        *   Question set number to show results for.
        */
       showResults: function(setNum) {
-        results = Storage.getResults(setNum);
+        var onModelFetched = function(data) {
+          var results = Storage.getResults(setNum);
 
-        this.resultsView = new ResultsView();
-        this.resultsView.render(setNum, this.qsetModel, results);
+          var friendAnswers = Storage.getFriendResults(setNum);
+
+          this.resultsView = new ResultsView();
+          this.resultsView.render(setNum, data, results, friendAnswers);
+        };
+
+        if (this.qsetModel === undefined || this.qsetModel.getQuestionSet() != setNum) {
+          this.qsetModel = new QSetModel();
+          this.qsetModel.setQuestionSet(setNum);
+
+          this.qsetModel.fetch({success:onModelFetched});
+        }
+        else {
+          onModelFetched(this.qsetModel);
+        }
       },
 
       /**

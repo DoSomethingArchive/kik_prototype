@@ -5,12 +5,16 @@ body {
   padding: 10px;
 }
 
+h4, h5 {
+  margin: 0;
+}
+
 .choice {
+  background-color: #5e9fe0;
   border: 1px solid white;
   border-radius: 5px;
   margin: 20px 0;
   padding: 20px;
-  background-color: #5e9fe0;
 }
 
   .choice:hover {
@@ -20,3 +24,27 @@ body {
   .choice:active {
     background-color: #4273da;
   }
+
+.question-set {
+  margin: 20px 0;
+}
+
+.restart {
+  background-color: #c2ddb6;
+  border: 1px solid white;
+  border-radius: 5px;
+  color: black;
+  margin: 40px 0 20px 0;
+  padding: 5px;
+  text-align: center;
+}
+
+.share {
+  background-color: #e2ba68;
+  border: 1px solid white;
+  border-radius: 5px;
+  color: black;
+  margin: 20px 0;
+  padding: 20px;
+  text-align: center;
+}

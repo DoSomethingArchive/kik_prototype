@@ -11,6 +11,7 @@ define(
     var QSetView = Backbone.View.extend({
       events: {
         'click .choice': 'selectChoice',
+        'click .restart': 'restart',
       },
 
       currentQuestion: -1,
@@ -37,11 +38,19 @@ define(
       },
 
       /**
+       * Restart the question set.
+       */
+      restart: function(evt) {
+        AppRouter.restart();
+      },
+
+      /**
        * Click event callback for selecting a choice.
        */
       selectChoice: function(evt) {
         selected = this.extractChoiceFromEvent(evt);
         Storage.setQuestionResult(AppRouter.getSet(), AppRouter.getQuestion(), selected);
+        console.log("choice selected: " + selected);
 
         // If there's a next question, show next question. Otherwise, show results.
         nextQuestionIndex = this.currentQuestion + 1;

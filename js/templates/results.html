@@ -1,0 +1,11 @@
+<h1>YOUR RESULTS</h1>
+
+<h2>Question Set: <%= set %></h2>
+
+<% for (var resultsIndex = 0; resultsIndex < answers.length; resultsIndex++) { %>
+
+  <div><%= questions[resultsIndex].question %></div>
+  <div>Answer for question 1: <%= answers[resultsIndex] %></div>
+
+<% } %>
+

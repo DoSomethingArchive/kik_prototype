@@ -3,7 +3,7 @@ require.config({
     jquery: 'libs/jquery_2.0.3',
     underscore: 'libs/underscore_1.5.2',
     backbone: 'libs/backbone_1.1.0',
-    text: 'libs/text_2.1.10'
+    text: 'libs/text_2.1.10',
   },
   shim: {
     underscore: {

@@ -3,16 +3,18 @@ define(
     'jquery',
     'underscore',
     'backbone',
+    'storage',
     'models/qsetModel',
-    'views/qsetView'
+    'views/qsetView',
+    'views/resultsView',
   ],
 
-  function($, _, Backbone, QSetModel, QSetView) {
+  function($, _, Backbone, Storage, QSetModel, QSetView, ResultsView) {
     var Router = Backbone.Router.extend({
       routes: {
         '': 'showDashboard',
         'qset/:setNum/:questionNum': 'showQSet',
-        'results': 'showResults',
+        'results/:setNum': 'showResults',
       },
 
       initialize: function() {
@@ -30,6 +32,7 @@ define(
 
       /**
        * Display the question set.
+       *
        * @param int setNum
        *   Question set number to display.
        * @param int questionNum
@@ -53,8 +56,17 @@ define(
         }
       },
 
-      showResults: function() {
-        console.log('showResults()');
+      /**
+       * Display the results View.
+       *
+       * @param int setNum
+       *   Question set number to show results for.
+       */
+      showResults: function(setNum) {
+        results = Storage.getResults(setNum);
+
+        this.resultsView = new ResultsView();
+        this.resultsView.render(setNum, this.qsetModel, results);
       },
 
       /**
@@ -78,8 +90,25 @@ define(
        */
       goToResults: function() {
         window.location.href = window.location.origin + window.location.pathname +
-          '#results';
+          '#results' + '/' + this.getSet();
       },
+
+      /**
+       * Get the question index from the URL.
+       */
+      getQuestion: function() {
+        hashVals = window.location.hash.split('/');
+        return hashVals[2];
+      },
+
+      /**
+       * Get the question set from the URL.
+       */
+      getSet: function() {
+        hashVals = window.location.hash.split('/');
+        return hashVals[1];
+      },
+
 
     });
 

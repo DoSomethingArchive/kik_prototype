@@ -3,10 +3,11 @@ define(
     'jquery',
     'underscore',
     'backbone',
+    'storage',
     'text!templates/qset.html'
   ],
 
-  function($, _, Backbone, template) {
+  function($, _, Backbone, Storage, template) {
     var QSetView = Backbone.View.extend({
       events: {
         'click .choice': 'selectChoice',
@@ -40,6 +41,7 @@ define(
        */
       selectChoice: function(evt) {
         selected = this.extractChoiceFromEvent(evt);
+        Storage.setQuestionResult(AppRouter.getSet(), AppRouter.getQuestion(), selected);
 
         // If there's a next question, show next question. Otherwise, show results.
         nextQuestionIndex = this.currentQuestion + 1;

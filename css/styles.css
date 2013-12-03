@@ -9,6 +9,23 @@ h4, h5 {
   margin: 0;
 }
 
+.button {
+  background-color: #fff;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: black;
+  margin: 20px 0;
+  padding: 20px;
+}
+
+  .button:hover {
+    background-color: #b7b7b7;
+  }
+
+  .button:active {
+    background-color: #b7b7b7;
+  }
+
 .choice {
   background-color: #5e9fe0;
   border: 1px solid white;

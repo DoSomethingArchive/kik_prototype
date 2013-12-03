@@ -5,11 +5,12 @@ define(
     'backbone',
     'storage',
     'models/qsetModel',
+    'views/dashboardView',
     'views/qsetView',
     'views/resultsView',
   ],
 
-  function($, _, Backbone, Storage, QSetModel, QSetView, ResultsView) {
+  function($, _, Backbone, Storage, QSetModel, DashboardView, QSetView, ResultsView) {
     var Router = Backbone.Router.extend({
       routes: {
         '': 'showDashboard',
@@ -25,11 +26,10 @@ define(
       },
 
       /**
-       * Restart the current question set.
+       * Return to the dashboard screen
        */
       restart: function() {
-        window.location.href = window.location.origin + window.location.pathname +
-          '#qset/' + this.getSet() + '/0';
+        window.location.href = window.location.origin + window.location.pathname;
       },
 
       /**
@@ -52,12 +52,13 @@ define(
           window.location.href = url;
         }
         else {
+          // @todo Start qset if no previously taken qset is found
+
           // Clear any friend results
           Storage.clearFriendResults();
 
-          // @todo Decide whether to start new question set or show user dashboard
-          //   For now, just launch into the qset
-          window.location.href += '#qset/1/0';
+          var dashboardView = new DashboardView();
+          dashboardView.render();
         }
       },
 
@@ -112,6 +113,13 @@ define(
         else {
           onModelFetched(this.qsetModel);
         }
+      },
+
+      startQuestionSet: function() {
+        // Choose a question set
+        // Then change URL to go to that question set
+        window.location.href = window.location.origin + window.location.pathname +
+          '#qset/1/0';
       },
 
       /**

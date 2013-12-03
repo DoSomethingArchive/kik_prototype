@@ -52,6 +52,17 @@ define(
           window.location.href = url;
         }
         else {
+          // Handle push notification data
+          if (cards.push && cards.push.handler) {
+            cards.push.handler(function(data) {
+              if (!data)
+                return;
+
+              var strData = JSON.stringify(data);
+              console.log("Push notification data received: " + strData);
+            });
+          }
+
           // @todo Start qset if no previously taken qset is found
 
           // Clear any friend results

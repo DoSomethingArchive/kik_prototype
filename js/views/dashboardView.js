@@ -10,10 +10,12 @@ define(
     var DashboardView = Backbone.View.extend({
       events: {
         'click #startQuiz': 'startQuiz',
+        'click #testGetAnonUser': 'testGetAnonUser',
         'click #testGetUser': 'testGetUser',
         'click #testPickUsers': 'testPickUsers',
         'click #testOpenConversation': 'testOpenConversation',
         'click #testShowProfile': 'testShowProfile',
+        'click #testPushGetToken': 'testPushGetToken',
       },
 
       template: '',
@@ -32,6 +34,17 @@ define(
       /**
        * Kik API tests
        */
+      testGetAnonUser: function() {
+        if (cards.kik && cards.kik.getAnonymousUser) {
+          cards.kik.getAnonymousUser(function(token) {
+            if (!token)
+              return;
+
+            console.log('cards.kik.getAnonymousUser(): ' + token);
+          });
+        }
+      },
+
       testGetUser: function() {
         if (cards.kik && cards.kik.getUser) {
           cards.kik.getUser(function(user) {
@@ -111,6 +124,17 @@ define(
           );
         }
       },
+
+      testPushGetToken: function() {
+        if (cards.push && cards.push.getToken) {
+          cards.push.getToken(function(token) {
+            if (!token)
+              return;
+
+            console.log('cards.push.getToken(): ' + token);
+          });
+        }
+      }
     });
 
     return DashboardView;

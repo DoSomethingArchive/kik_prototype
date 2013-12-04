@@ -173,6 +173,13 @@ define(
         return hashVals[1];
       },
 
+      /**
+       * Get the URL for the user API.
+       */
+      apiGetUserUrl: function() {
+        return window.location.origin + window.location.pathname + 'api/user';
+      },
+
 
     });
 

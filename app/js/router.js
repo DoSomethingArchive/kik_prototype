@@ -8,14 +8,16 @@ define(
     'views/dashboardView',
     'views/qsetView',
     'views/resultsView',
+    'views/testView',
   ],
 
-  function($, _, Backbone, Storage, QSetModel, DashboardView, QSetView, ResultsView) {
+  function($, _, Backbone, Storage, QSetModel, DashboardView, QSetView, ResultsView, TestView) {
     var Router = Backbone.Router.extend({
       routes: {
         '': 'showDashboard',
         'qset/:setNum/:questionNum': 'showQSet',
         'results/:setNum': 'showResults',
+        'test': 'showTest',
       },
 
       // Data received when app is opened from a shared Kik card
@@ -62,8 +64,6 @@ define(
               console.log("Push notification data received: " + strData);
             });
           }
-
-          // @todo Start qset if no previously taken qset is found
 
           // Clear any friend results
           Storage.clearFriendResults();
@@ -123,6 +123,45 @@ define(
         }
         else {
           onModelFetched(this.qsetModel);
+        }
+      },
+
+      /**
+       * Display the test screen
+       */
+      showTest: function() {
+        // Opened through a Kik card message
+        if (cards.kik !== undefined && cards.kik.message) {
+          console.log('\n\nOpened through a Kik card:');
+          console.log('  question set: ' + cards.kik.message.set);
+          console.log('  friend\'s answers: ' + JSON.stringify(cards.kik.message.answers));
+          console.log('\n\n');
+
+          Storage.setFriendResults(cards.kik.message.set, cards.kik.message.answers);
+          var questionSet = cards.kik.message.set;
+
+          var url = window.location.origin + window.location.pathname +
+            '#qset/' + questionSet + '/0';
+          console.log('url: ' + url);
+          window.location.href = url;
+        }
+        else {
+          // Handle push notification data
+          if (cards.push && cards.push.handler) {
+            cards.push.handler(function(data) {
+              if (!data)
+                return;
+
+              var strData = JSON.stringify(data);
+              console.log("Push notification data received: " + strData);
+            });
+          }
+
+          // Clear any friend results
+          Storage.clearFriendResults();
+
+          var testView = new TestView();
+          testView.render();
         }
       },
 

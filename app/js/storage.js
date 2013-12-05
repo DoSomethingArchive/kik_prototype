@@ -3,6 +3,56 @@ define(function() {
     keyBase: '_ds_kik_',
 
     /**
+     * Get the list of friends selected.
+     *
+     * @return array
+     */
+    getFriendsList: function() {
+      var key = this.keyBase + 'friends_list';
+      var jsonUsers = localStorage.getItem(key);
+      if (jsonUsers)
+        return JSON.parse(jsonUsers);
+      else
+        return [];
+    },
+
+    /**
+     * Save the list of selected friends.
+     *
+     * @param array users
+     */
+    setFriendsList: function(users) {
+      var key = this.keyBase + 'friends_list';
+      var jsonUsers = JSON.stringify(users);
+      localStorage.setItem(key, jsonUsers);
+    },
+
+    /**
+     * Get the user data.
+     *
+     * @return object
+     */
+    getUserData: function() {
+      var key = this.keyBase + 'user_data';
+      var jsonUser = localStorage.getItem(key);
+      if (jsonUser)
+        return JSON.parse(jsonUser);
+      else
+        return {};
+    },
+
+    /**
+     * Save the user data.
+     *
+     * @param object user
+     */
+    setUserData: function(user) {
+      var key = this.keyBase + 'user_data';
+      var jsonUser = JSON.stringify(user);
+      localStorage.setItem(key, jsonUser);
+    },
+
+    /**
      * Get user's answers from a question set.
      * @param int set
      *   Question set to get user's answers for.

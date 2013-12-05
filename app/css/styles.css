@@ -2,7 +2,8 @@ body {
   background-color: #333131;
   color: #f4f4f4;
   font-family: 'Montserrat';
-  padding: 10px;
+  margin: 0;
+  padding: 0;
 }
 
 h4, h5 {
@@ -46,16 +47,24 @@ h4, h5 {
   border: 1px solid white;
   border-radius: 5px;
   margin: 20px 0;
-  padding: 20px;
+  padding: 10px;
+  position: relative;
 }
 
-  .choice:hover {
+  .choice:hover, .choice:active {
     background-color: #4273da;
   }
 
-  .choice:active {
-    background-color: #4273da;
-  }
+.choiceImg {
+  border: 1px solid;
+  height: 32px;
+}
+
+.choiceUsername {
+  margin-left: 20px;
+  position:absolute;
+  top: 16px;
+}
 
 .friendsListImg {
   height: 48px;
@@ -74,6 +83,19 @@ h4, h5 {
   position: relative;
 }
 
+.nextQuestion {
+  background-color: #8cc026;
+  border: 1px solid white;
+  border-radius: 5px;
+  margin: 20px 0;
+  padding: 20px;
+  text-align: center;
+}
+
+  .nextQuestion:hover, .nextQuestion:active {
+    background-color: #add137;
+  }
+
 .question-set {
   margin: 20px 0;
 }
@@ -88,6 +110,38 @@ h4, h5 {
   text-align: center;
 }
 
+.resultsContent {
+  margin: 0 10px;
+}
+
+.resultsNotSelected {
+  border-bottom: 1px solid white;
+  margin: 20px 0 5px 0;
+  padding: 0 0 5px 10px;
+  position: relative;
+}
+
+  .resultsNotSelected .choiceUsername {
+    top: 8px;
+  }
+
+.resultsSelected {
+  border-bottom: 1px solid white;
+  font-weight: bold;
+  margin: 20px 0 5px 0;
+  padding: 0 0 5px 10px;
+  position: relative;
+}
+
+  .resultsSelected .choiceImg {
+    height: 48px;
+  }
+
+  .resultsSelected .choiceUsername {
+    font-size: 24px;
+    top: 12px;
+  }
+
 .share {
   background-color: #e2ba68;
   border: 1px solid white;
@@ -96,4 +150,15 @@ h4, h5 {
   margin: 20px 0;
   padding: 20px;
   text-align: center;
+}
+
+  .share:hover, .share:active {
+    background-color: #f3cb7a;
+  }
+
+.stat {
+  background-color: #666;
+  border-bottom: 1px solid white;
+  padding: 20px;
+
 }

@@ -4,19 +4,19 @@ define(
     'underscore',
     'backbone',
     'storage',
-    'models/qsetModel',
+    'models/questionsModel',
     'views/dashboardView',
-    'views/qsetView',
+    'views/questionView',
     'views/resultsView',
     'views/testView',
   ],
 
-  function($, _, Backbone, Storage, QSetModel, DashboardView, QSetView, ResultsView, TestView) {
+  function($, _, Backbone, Storage, QuestionsModel, DashboardView, QuestionView, ResultsView, TestView) {
     var Router = Backbone.Router.extend({
       routes: {
         '': 'showDashboard',
-        'qset/:setNum/:questionNum': 'showQSet',
-        'results/:setNum': 'showResults',
+        'question/:questionNum' : 'showQuestion',
+        'results/:questionNum': 'showResults',
         'test': 'showTest',
       },
 
@@ -41,15 +41,15 @@ define(
         // Opened through a Kik card message
         if (cards.kik !== undefined && cards.kik.message) {
           console.log('\n\nOpened through a Kik card:');
-          console.log('  question set: ' + cards.kik.message.set);
+          console.log('  question: ' + cards.kik.message.question);
           console.log('  friend\'s answers: ' + JSON.stringify(cards.kik.message.answers));
           console.log('\n\n');
 
           Storage.setFriendResults(cards.kik.message.set, cards.kik.message.answers);
-          var questionSet = cards.kik.message.set;
+          var questionNum = cards.kik.message.question;
 
           var url = window.location.origin + window.location.pathname +
-            '#qset/' + questionSet + '/0';
+            '#question/' + questionNum;
           console.log('url: ' + url);
           window.location.href = url;
         }
@@ -74,55 +74,42 @@ define(
       },
 
       /**
-       * Display the question set.
+       * Display the question.
        *
-       * @param int setNum
-       *   Question set number to display.
        * @param int questionNum
-       *   Index in that question set to display.
        */
-      showQSet: function(setNum, questionNum) {
-
-        var onModelFetched = function(data) {
-          this.qsetView = this.qsetView || new QSetView();
-          this.qsetView.render(questionNum, data);
+      showQuestion: function(questionNum) {
+        var onModelFetched = function(model) {
+          this.questionView = this.questionView || new QuestionView();
+          this.questionView.render(questionNum, model);
         };
 
-        if (this.qsetModel === undefined || this.qsetModel.getQuestionSet() != setNum) {
-          this.qsetModel = new QSetModel();
-          this.qsetModel.setQuestionSet(setNum);
-
-          this.qsetModel.fetch({success:onModelFetched});
+        if (!this.questionsModel) {
+          this.questionsModel = new QuestionsModel();
+          this.questionsModel.fetch({success:onModelFetched});
         }
         else {
-          onModelFetched(this.qsetModel);
+          onModelFetched(this.questionsModel);
         }
       },
 
       /**
        * Display the results View.
        *
-       * @param int setNum
-       *   Question set number to show results for.
+       * @param int questionNum
        */
-      showResults: function(setNum) {
+      showResults: function(questionNum) {
         var onModelFetched = function(data) {
-          var results = Storage.getResults(setNum);
-
-          var friendAnswers = Storage.getFriendResults(setNum);
-
           this.resultsView = new ResultsView();
-          this.resultsView.render(setNum, data, results, friendAnswers);
+          this.resultsView.render(questionNum, data);
         };
 
-        if (this.qsetModel === undefined || this.qsetModel.getQuestionSet() != setNum) {
-          this.qsetModel = new QSetModel();
-          this.qsetModel.setQuestionSet(setNum);
-
-          this.qsetModel.fetch({success:onModelFetched});
+        if (!this.questionsModel) {
+          this.questionsModel = new QuestionsModel();
+          this.questionsModel.fetch({success:onModelFetched});
         }
         else {
-          onModelFetched(this.qsetModel);
+          onModelFetched(this.questionsModel);
         }
       },
 
@@ -165,27 +152,19 @@ define(
         }
       },
 
-      startQuestionSet: function() {
-        // Choose a question set
-        // Then change URL to go to that question set
-        window.location.href = window.location.origin + window.location.pathname +
-          '#qset/1/0';
-      },
-
       /**
        * Change URL to go to the next question in this set
        */
-      nextQuestion: function() {
-        hashVals = window.location.hash.split('/');
-        hashBase = hashVals[0]; // '#qset'
-        hashSet = hashVals[1];
-        hashQuestion = parseInt(hashVals[2], 10) + 1; // increment the question index
+      goToNextQuestion: function() {
+        var question = 0 ;
+        if (window.location.hash.length > 0) {
+          hashVals = window.location.hash.split('/');
+          // hashVals[0] => '#question'
+          question = parseInt(hashVals[1], 10) + 1; // increment the question index
+        }
 
-        // Remove last number
         window.location.href = window.location.origin + window.location.pathname +
-          hashBase +
-          '/' + hashSet +
-          '/' + hashQuestion;
+          '#question/' + question;
       },
 
       /**
@@ -193,21 +172,13 @@ define(
        */
       goToResults: function() {
         window.location.href = window.location.origin + window.location.pathname +
-          '#results' + '/' + this.getSet();
+          '#results' + '/' + this.getQuestion();
       },
 
       /**
        * Get the question index from the URL.
        */
       getQuestion: function() {
-        hashVals = window.location.hash.split('/');
-        return hashVals[2];
-      },
-
-      /**
-       * Get the question set from the URL.
-       */
-      getSet: function() {
         hashVals = window.location.hash.split('/');
         return hashVals[1];
       },

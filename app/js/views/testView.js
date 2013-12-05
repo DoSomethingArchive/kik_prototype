@@ -28,7 +28,7 @@ define(
       },
 
       startQuiz: function() {
-        AppRouter.startQuestionSet();
+        AppRouter.goToNextQuestion();
       },
 
       /**

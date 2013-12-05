@@ -80,15 +80,15 @@ define(
           var dummyData = {
             users: [
               {
-                username: 'test_user',
+                username: 'test_user_1',
                 thumbnail: 'img/aaron.jpg'
               },
               {
-                username: 'test_user',
+                username: 'test_user_2',
                 thumbnail: 'img/aaron.jpg'
               },
               {
-                username: 'test_user',
+                username: 'test_user_3',
                 thumbnail: 'img/aaron.jpg'
               }
             ]
@@ -99,6 +99,9 @@ define(
           var friendsList = $('#friends-list');
               friendsList.empty();
               friendsList.append(_.template(tplFriendsList, dummyData));
+
+          $('#pickFriends').hide();
+          $('#startQuestions').show();
         }
       },
 
@@ -166,8 +169,12 @@ define(
             }
 
             // Start the questions
-            AppRouter.startQuestionSet();
+            AppRouter.goToNextQuestion();
           });
+        }
+        // If this is from a desktop page for dev, just start the questions
+        else {
+          AppRouter.goToNextQuestion();
         }
       },
 

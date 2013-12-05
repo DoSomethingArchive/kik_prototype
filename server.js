@@ -15,6 +15,7 @@ mongoose.connect('mongodb://localhost/kik_prototype_db');
 var UserSchema = new mongoose.Schema({
   answers: String,
   push_token: String,
+  selected_by: String,
   thumbnail: String,
   username: String,
 });
@@ -67,6 +68,11 @@ app.get('/api', function(request, response) {
  * Creates or updates a user's model to the database.
  */
 app.post('/api/user', function(request, response) {
+
+// @todo Temporarily just reply back with the request body
+console.log('\n\nPOST /api/user:');
+console.dir(request.body);
+return response.send(request.body);
 
   console.log('\n\nPOST /api/user:');
   console.log('    request.body.answers: ' + request.body.answers);

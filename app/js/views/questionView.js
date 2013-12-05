@@ -4,11 +4,11 @@ define(
     'underscore',
     'backbone',
     'storage',
-    'text!templates/qset.html'
+    'text!templates/question.html'
   ],
 
   function($, _, Backbone, Storage, template) {
-    var QSetView = Backbone.View.extend({
+    var QuestionView = Backbone.View.extend({
       events: {
         'click .choice': 'selectChoice',
         'click .restart': 'restart',
@@ -33,8 +33,13 @@ define(
         this.dataModel = dataModel;
         this.currentQuestion = parseInt(questionNum, 10);
 
+        tplData = {
+          question: dataModel.attributes[questionNum].question,
+          friends: Storage.getFriendsList(),
+        };
+
         this.$el.empty();
-        this.$el.append(_.template(template, dataModel.attributes[questionNum]));
+        this.$el.append(_.template(template, tplData));
       },
 
       /**
@@ -48,18 +53,15 @@ define(
        * Click event callback for selecting a choice.
        */
       selectChoice: function(evt) {
-        selected = this.extractChoiceFromEvent(evt);
-        Storage.setQuestionResult(AppRouter.getSet(), AppRouter.getQuestion(), selected);
-        console.log("choice selected: " + selected);
+        choice = this.extractChoiceFromEvent(evt);
+        var friends = Storage.getFriendsList();
+        var selectedUsername = friends[choice].username;
+        console.log("Choice selected: " + selectedUsername);
 
-        // If there's a next question, show next question. Otherwise, show results.
-        nextQuestionIndex = this.currentQuestion + 1;
-        if (this.dataModel.attributes[nextQuestionIndex] === undefined) {
-          AppRouter.goToResults();
-        }
-        else {
-          AppRouter.nextQuestion();
-        }
+        Storage.setQuestionAnswer(AppRouter.getQuestion(), selectedUsername);
+
+        // Transition to the results screen
+        AppRouter.goToResults();
       },
 
       /**
@@ -71,6 +73,6 @@ define(
       }
     });
 
-    return QSetView;
+    return QuestionView;
   }
 );

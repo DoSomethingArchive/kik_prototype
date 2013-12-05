@@ -3,12 +3,14 @@ define(
     'jquery',
     'underscore',
     'backbone',
+    'storage',
     'text!templates/results.html'
   ],
 
-  function($, _, Backbone, template) {
+  function($, _, Backbone, Storage, template) {
     var ResultsView = Backbone.View.extend({
       events: {
+        'click .nextQuestion': 'nextQuestion',
         'click .restart': 'restart',
         'click .share': 'share',
       },
@@ -24,26 +26,38 @@ define(
       /**
        * Render the View to the DOM.
        *
-       * @param int set
+       * @param int questionNum
        * @param Backbone.Model model
-       * @param array answers
-       * @param array friendAnswers
        */
-      render: function(set, model, answers, friendAnswers) {
+      render: function(questionNum, model) {
         var data = {};
-        data.model = model.attributes;
-        data.set = set;
-        data.answers = answers;
-        data.friendAnswers = friendAnswers;
+        data.model = model.attributes[questionNum];
+        data.question = questionNum;
+        data.friends = Storage.getFriendsList();
 
-        this.answers = answers;
-        this.questionSet = set;
+        data.answerUsername = Storage.getQuestionAnswer(questionNum);
+        for (var i = 0; i < data.friends.length; i++) {
+          if (data.friends[i].username == data.answerUsername) {
+            data.answerThumbnail = data.friends[i].thumbnail;
+            break;
+          }
+        }
+
+        this.answer = data.answer;
+        this.questionNum = questionNum;
 
         this.$el.empty();
         this.$el.append(_.template(template,data));
 
-        // Submit results to server
-        this.submitResults(set, answers);
+        // @todo Submit results to server
+        // this.submitResults(set, answers);
+      },
+
+      /**
+       * Go to the next question.
+       */
+      nextQuestion: function() {
+        AppRouter.goToNextQuestion();
       },
 
       /**

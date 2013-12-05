@@ -53,49 +53,27 @@ define(function() {
     },
 
     /**
-     * Get user's answers from a question set.
-     * @param int set
-     *   Question set to get user's answers for.
-     * @return object
+     * Get user's answers from a question.
+     *
+     * @param int question
+     * @return string
      */
-    getResults: function(set) {
-      var key = this.keyBase + set;
-      var storedJson = localStorage.getItem(key);
-      var data = JSON.parse(storedJson);
+    getQuestionAnswer: function(question) {
+      var key = this.keyBase + 'question_' + question;
+      var username = localStorage.getItem(key);
 
-      return data ? data.answers : {};
+      return username || '';
     },
 
     /**
      * Save the user's answer for a given question.
-     * @param int set
-     *   Question set.
+     *
      * @param int question
-     *   Question number in the set.
-     * @param int answer
-     *   Answer index.
+     * @param string username
      */
-    setQuestionResult: function(set, question, answer) {
-      var key = this.keyBase + set;
-      var storedJson = localStorage.getItem(key);
-      var data = {};
-
-      if (storedJson) {
-        data = JSON.parse(storedJson);
-      }
-      else {
-        data.key = key;
-      }
-
-      if (typeof(data.answers) == 'undefined') {
-        data.answers = [];
-      }
-
-      data.answers[question] = answer;
-
-      // Convert back to JSON string
-      var newJson = JSON.stringify(data);
-      localStorage.setItem(key, newJson);
+    setQuestionAnswer: function(question, username) {
+      var key = this.keyBase + 'question_' + question;
+      localStorage.setItem(key, username);
     },
 
     /**

@@ -1,0 +1,169 @@
+body {
+  background-color: #333131;
+  color: #f4f4f4;
+  font-family: 'Montserrat';
+  margin: 0;
+  padding: 0;
+}
+
+h4, h5 {
+  margin: 0;
+}
+
+.button {
+  background-color: #666;
+  border-radius: 5px;
+  margin: 20px 0;
+  padding: 20px;
+}
+
+  .button:hover {
+    background-color: #ddd;
+  }
+
+.button.pickFriends {
+  background-color: #ef4135;
+}
+
+  .button.pickFriends:hover {
+    background-color: #ff5246;
+  }
+
+.button.startQuestions {
+  background-color: #8cc026;
+  display: none;
+}
+
+  .button.startQuestions:hover {
+    background-color: #add137;
+  }
+
+.choice {
+  background-color: #5e9fe0;
+  border: 1px solid white;
+  border-radius: 5px;
+  margin: 20px 0;
+  padding: 10px;
+  position: relative;
+}
+
+  .choice:hover {
+    background-color: #4273da;
+  }
+
+.choiceImg {
+  border: 1px solid;
+  height: 32px;
+}
+
+.choiceUsername {
+  margin-left: 20px;
+  position:absolute;
+  top: 16px;
+}
+
+.facepile-item {
+  width: 32px;
+}
+
+.friendsListImg {
+  height: 48px;
+}
+
+.friendsListUsername {
+  font-size: 24px;
+  margin-left: 20px;
+  position: absolute;
+  top: 24px;
+}
+
+.friendsListRow {
+  border-bottom: 1px solid #f4f4f4;
+  padding: 10px;
+  position: relative;
+}
+
+.nextQuestion {
+  background-color: #8cc026;
+  border: 1px solid white;
+  border-radius: 5px;
+  color: black;
+  margin: 20px 0;
+  padding: 20px;
+  text-align: center;
+}
+
+  .nextQuestion:hover {
+    background-color: #add137;
+  }
+
+.question-set {
+  margin: 20px 0;
+}
+
+.restart {
+  background-color: #f4f4f4;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: black;
+  margin: 40px 0 20px 0;
+  padding: 5px;
+  text-align: center;
+}
+
+  .restart:hover {
+    background-color: #ddd;
+  }
+
+.resultsContent {
+  margin: 0 10px;
+}
+
+.resultsNotSelected {
+  border-bottom: 1px solid white;
+  margin: 20px 0 5px 0;
+  padding: 0 0 5px 10px;
+  position: relative;
+}
+
+  .resultsNotSelected .choiceUsername {
+    top: 8px;
+  }
+
+.resultsSelected {
+  border-bottom: 1px solid white;
+  font-weight: bold;
+  margin: 20px 0 5px 0;
+  padding: 0 0 5px 10px;
+  position: relative;
+}
+
+  .resultsSelected .choiceImg {
+    height: 48px;
+  }
+
+  .resultsSelected .choiceUsername {
+    font-size: 24px;
+    top: 12px;
+  }
+
+.share {
+  background-color: #f6e816;
+  border: 1px solid white;
+  border-radius: 5px;
+  color: black;
+  margin: 20px 0;
+  padding: 20px;
+  text-align: center;
+}
+
+  .share:hover {
+    background-color: #f7fa27;
+  }
+
+.stat {
+  background-color: #666;
+  border-bottom: 1px solid white;
+  padding: 20px;
+
+}

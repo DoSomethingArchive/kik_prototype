@@ -83,6 +83,8 @@ define(
             if (data.selected_by[question].length > 0) {
               var id = '#' + data.username + '-selectedBy';
               if ($(id)) {
+                $(id).empty();
+
                 var tplData = {data: data.selected_by[question]};
                 $(id).append(_.template(tplSelectedBy, tplData));
               }

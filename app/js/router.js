@@ -31,7 +31,7 @@ define(
        * Return to the dashboard screen
        */
       restart: function() {
-        window.location.href = window.location.origin + window.location.pathname;
+        window.location.href = this.getBaseUrl();
       },
 
       /**
@@ -48,8 +48,7 @@ define(
           Storage.setFriendResults(cards.kik.message.set, cards.kik.message.answers);
           var questionNum = cards.kik.message.question;
 
-          var url = window.location.origin + window.location.pathname +
-            '#question/' + questionNum;
+          var url = this.getBaseUrl() + '#question/' + questionNum;
           console.log('url: ' + url);
           window.location.href = url;
         }
@@ -127,8 +126,7 @@ define(
           Storage.setFriendResults(cards.kik.message.set, cards.kik.message.answers);
           var questionSet = cards.kik.message.set;
 
-          var url = window.location.origin + window.location.pathname +
-            '#qset/' + questionSet + '/0';
+          var url = this.getBaseUrl() + '#qset/' + questionSet + '/0';
           console.log('url: ' + url);
           window.location.href = url;
         }
@@ -159,20 +157,18 @@ define(
         var question = 0 ;
         if (window.location.hash.length > 0) {
           hashVals = window.location.hash.split('/');
-          // hashVals[0] => '#question'
           question = parseInt(hashVals[1], 10) + 1; // increment the question index
         }
 
-        window.location.href = window.location.origin + window.location.pathname +
-          '#question/' + question;
+
+        window.location.href = this.getBaseUrl() + '#question/' + question;
       },
 
       /**
        * Change URL to the results page
        */
       goToResults: function() {
-        window.location.href = window.location.origin + window.location.pathname +
-          '#results' + '/' + this.getQuestion();
+        window.location.href = this.getBaseUrl() + '#results' + '/' + this.getQuestion();
       },
 
       /**
@@ -184,10 +180,28 @@ define(
       },
 
       /**
+       * Get the base Url.
+       * Saw some weird behavior across different phones. Some had no problem
+       * with the window.location.*, and some would just return undefined.
+       */
+      getBaseUrl: function() {
+        var url = '';
+        if (window.location.origin) {
+          url += window.location.origin;
+        }
+
+        if (window.location.pathname) {
+          url += window.location.pathname;
+        }
+
+        return url;
+      },
+
+      /**
        * Get the URL for the user API.
        */
       apiGetUserUrl: function() {
-        return window.location.origin + window.location.pathname + 'api/user';
+        return this.getBaseUrl() + 'api/user';
       },
 
 

@@ -13,7 +13,7 @@ define(function() {
       if (jsonUsers)
         return JSON.parse(jsonUsers);
       else
-        return [];
+        return null;
     },
 
     /**
@@ -28,6 +28,28 @@ define(function() {
     },
 
     /**
+     * Get the user's Kik push token.
+     *
+     * @return string
+     */
+    getPushToken: function() {
+      var key = this.keyBase + 'push_token';
+      var token = localStorage.getItem(key);
+
+      return token || null;
+    },
+
+    /**
+     * Set the user's Kik push token.
+     *
+     * @param string token
+     */
+    setPushToken: function(token) {
+      var key = this.keyBase + 'push_token';
+      localStorage.setItem(key, token);
+    },
+
+    /**
      * Get the user data.
      *
      * @return object
@@ -38,7 +60,7 @@ define(function() {
       if (jsonUser)
         return JSON.parse(jsonUser);
       else
-        return {};
+        return null;
     },
 
     /**
@@ -62,7 +84,7 @@ define(function() {
       var key = this.keyBase + 'question_' + question;
       var username = localStorage.getItem(key);
 
-      return username || '';
+      return username || null;
     },
 
     /**

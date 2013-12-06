@@ -13,7 +13,8 @@ define(
       events: {
         'click #pickFriends': 'pickFriends',
         'click #startQuestions': 'startQuestions',
-        'click .restart': 'reset',
+        'click #reset': 'reset',
+        'click #reload': 'reload',
       },
 
       el: $('#page-content'),
@@ -135,7 +136,6 @@ define(
               function(data, textStatus, jqXHR) {
                 console.dir(data);
                 console.log(textStatus);
-                console.dir(jqXHR);
               }
             );
 
@@ -147,6 +147,9 @@ define(
                   return;
 
                 console.log('cards.push.getToken(): ' + token);
+
+                // Save the push token to localStorage
+                Storage.setPushToken(token);
 
                 var user = Storage.getUserData();
 
@@ -162,7 +165,6 @@ define(
                   function(data, textStatus, jqXHR) {
                     console.dir(data);
                     console.log(textStatus);
-                    console.dir(jqXHR);
                   }
                 );
               });
@@ -182,6 +184,15 @@ define(
        * Reset the dashboard view
        */
       reset: function(evt) {
+        $('#friends-list').empty();
+        $('#pickFriends').show();
+        $('#startQuestions').hide();
+      },
+
+      /**
+       * For dev use. Reload the page.
+       */
+      reload: function(evt) {
         window.location.reload();
       },
     });

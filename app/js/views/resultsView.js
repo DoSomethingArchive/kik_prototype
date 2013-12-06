@@ -43,14 +43,14 @@ define(
           }
         }
 
-        this.answer = data.answer;
+        this.answerUsername = data.answerUsername;
         this.questionNum = questionNum;
 
         this.$el.empty();
         this.$el.append(_.template(template,data));
 
-        // @todo Submit results to server
-        // this.submitResults(set, answers);
+        // Submit results to server
+        this.postAnswer(questionNum, data.answerUsername);
       },
 
       /**
@@ -58,6 +58,56 @@ define(
        */
       nextQuestion: function() {
         AppRouter.goToNextQuestion();
+      },
+
+      /**
+       * Send user's answer to the server for tracking.
+       *
+       * @param question int
+       * @param answer string
+       */
+      postAnswer: function(question, answer) {
+        var data = {};
+
+        // Use data from localStorage to build data packet
+        if (cards.kik) {
+          data = {
+            answer: answer,
+            question: question
+          };
+
+          var userData = Storage.getUserData();
+          if (userData) {
+            data['thumbnail'] = userData.thumbnail;
+            data['username'] = userData.username;
+          }
+
+          var pushToken = Storage.getPushToken();
+          if (pushToken) {
+            data['push_token'] = pushToken;
+          }
+        }
+        // Or if we're testing outside of Kik, use dummy data
+        else {
+          data = {
+            answer: 'test_answer',
+            push_token: 'test_push_token',
+            question: 0,
+            thumbnail: 'test_thumbnail',
+            username: 'test_username'
+          };
+        }
+
+        // POST data to the server
+        $.post(
+          AppRouter.apiGetUserUrl(),
+          data,
+          function(data, textStatus, jqXHR) {
+            console.dir(data);
+            console.log(textStatus);
+            console.dir(jqXHR);
+          }
+        );
       },
 
       /**
@@ -83,84 +133,6 @@ define(
         }
       },
 
-      /**
-       * Submit results to server.
-       */
-      submitResults: function(set, answers) {
-        // Convert answer indexes from string to int
-        for (var i = 0; i < answers.length; i++) {
-          answers[i] = parseInt(answers[i], 10);
-        }
-
-        var objAnswers = {};
-        objAnswers[set] = answers;
-        var strAnswers = JSON.stringify(objAnswers);
-        var push_token = '',
-            thumbnail = '',
-            username = '';
-
-        // Step 3: Get the push token and submit results to the server
-        var onGetPushToken = function(token) {
-          if (!token)
-            return;
-
-          push_token = token;
-
-          // Submit data to the server
-          var userData = {
-            answers: strAnswers,
-            push_token: push_token,
-            thumbnail: thumbnail,
-            username: username
-          };
-
-          this.execSubmit(userData);
-        };
-
-        // Step 2: get the user profile data for username and thumbnail
-        var onGetUserData = function(user) {
-          if (!user)
-            return;
-
-          username = user.username;
-          thumbnail = user.thumbnail;
-
-          if (cards.push && cards.push.getToken) {
-            cards.push.getToken(onGetPushToken);
-          }
-        };
-
-        // Step 1: Get user data
-        if (cards.kik && cards.kik.getUser) {
-          cards.kik.getUser(onGetUserData);
-        }
-        // Otherwise, if we're testing this outside of Kik, send dummy data
-        else {
-          var dummyData = {
-            answers: JSON.stringify({'test':[1,2,3]}),
-            push_token: 'test_push_token',
-            thumbnail: 'test_thumbnail',
-            username: 'test_username'
-          };
-
-          this.execSubmit(dummyData);
-        }
-      },
-
-      /**
-       * Execute the post command to submit user data
-       */
-      execSubmit: function(userData) {
-        $.post(
-          AppRouter.apiGetUserUrl(),
-          userData,
-          function(data, textStatus, jqXHR) {
-            console.dir(data);
-            console.log(textStatus);
-            console.dir(jqXHR);
-          }
-        );
-      }
     });
 
     return ResultsView;

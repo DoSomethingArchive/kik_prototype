@@ -21,15 +21,11 @@ h4, h5 {
     background-color: #ddd;
   }
 
-  .button:active {
-    background-color: #ddd;
-  }
-
 .button.pickFriends {
   background-color: #ef4135;
 }
 
-  .button.pickFriends:active, .button.pickFriends:hover {
+  .button.pickFriends:hover {
     background-color: #ff5246;
   }
 
@@ -38,7 +34,7 @@ h4, h5 {
   display: none;
 }
 
-  .button.startQuestions:active, .button.startQuestions:hover {
+  .button.startQuestions:hover {
     background-color: #add137;
   }
 
@@ -51,7 +47,7 @@ h4, h5 {
   position: relative;
 }
 
-  .choice:hover, .choice:active {
+  .choice:hover {
     background-color: #4273da;
   }
 
@@ -87,12 +83,13 @@ h4, h5 {
   background-color: #8cc026;
   border: 1px solid white;
   border-radius: 5px;
+  color: black;
   margin: 20px 0;
   padding: 20px;
   text-align: center;
 }
 
-  .nextQuestion:hover, .nextQuestion:active {
+  .nextQuestion:hover {
     background-color: #add137;
   }
 
@@ -101,14 +98,18 @@ h4, h5 {
 }
 
 .restart {
-  background-color: #c2ddb6;
-  border: 1px solid white;
+  background-color: #f4f4f4;
+  border: 1px solid black;
   border-radius: 5px;
   color: black;
   margin: 40px 0 20px 0;
   padding: 5px;
   text-align: center;
 }
+
+  .restart:hover {
+    background-color: #ddd;
+  }
 
 .resultsContent {
   margin: 0 10px;
@@ -143,7 +144,7 @@ h4, h5 {
   }
 
 .share {
-  background-color: #e2ba68;
+  background-color: #f6e816;
   border: 1px solid white;
   border-radius: 5px;
   color: black;
@@ -152,8 +153,8 @@ h4, h5 {
   text-align: center;
 }
 
-  .share:hover, .share:active {
-    background-color: #f3cb7a;
+  .share:hover {
+    background-color: #f7fa27;
   }
 
 .stat {

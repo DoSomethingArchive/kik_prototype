@@ -58,7 +58,7 @@ define(
         var selectedUsername = friends[choice].username;
         console.log("Choice selected: " + selectedUsername);
 
-        Storage.setQuestionAnswer(AppRouter.getQuestion(), selectedUsername);
+        Storage.setQuestionAnswer(AppRouter.getQuestionNum(), selectedUsername);
 
         // Transition to the results screen
         AppRouter.goToResults();

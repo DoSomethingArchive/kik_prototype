@@ -42,15 +42,10 @@ define(
         if (cards.kik !== undefined && cards.kik.message) {
           console.log('\n\nOpened through a Kik card:');
           console.log('  question: ' + cards.kik.message.question);
-          console.log('  friend\'s answers: ' + JSON.stringify(cards.kik.message.answers));
           console.log('\n\n');
 
-          Storage.setFriendResults(cards.kik.message.set, cards.kik.message.answers);
-          var questionNum = cards.kik.message.question;
-
-          var url = this.getBaseUrl() + '#question/' + questionNum;
-          console.log('url: ' + url);
-          window.location.href = url;
+          // Send user to the shared question
+          this.nextQuestionOverride = cards.kik.message.question;
         }
         else {
           // Handle push notification data
@@ -63,13 +58,10 @@ define(
               console.log("Push notification data received: " + strData);
             });
           }
-
-          // Clear any friend results
-          Storage.clearFriendResults();
-
-          var dashboardView = new DashboardView();
-          dashboardView.render();
         }
+
+        var dashboardView = new DashboardView();
+        dashboardView.render();
       },
 
       /**
@@ -142,9 +134,6 @@ define(
             });
           }
 
-          // Clear any friend results
-          Storage.clearFriendResults();
-
           var testView = new TestView();
           testView.render();
         }
@@ -155,11 +144,14 @@ define(
        */
       goToNextQuestion: function() {
         var question = 0 ;
-        if (window.location.hash.length > 0) {
+        if (this.nextQuestionOverride) {
+          question = this.nextQuestionOverride;
+          this.nextQuestionOverride = undefined;
+        }
+        else if (window.location.hash.length > 0) {
           hashVals = window.location.hash.split('/');
           question = parseInt(hashVals[1], 10) + 1; // increment the question index
         }
-
 
         window.location.href = this.getBaseUrl() + '#question/' + question;
       },
@@ -168,15 +160,29 @@ define(
        * Change URL to the results page
        */
       goToResults: function() {
-        window.location.href = this.getBaseUrl() + '#results' + '/' + this.getQuestion();
+        window.location.href = this.getBaseUrl() + '#results' + '/' + this.getQuestionNum();
       },
 
       /**
        * Get the question index from the URL.
        */
-      getQuestion: function() {
+      getQuestionNum: function() {
         hashVals = window.location.hash.split('/');
         return hashVals[1];
+      },
+
+      /**
+       * Get the actual question text from the model.
+       *
+       * @param int questionNum
+       */
+      getQuestionText: function(questionNum) {
+        if (this.questionsModel) {
+          return this.questionsModel.attributes[questionNum].question;
+        }
+        else {
+          return null;
+        }
       },
 
       /**

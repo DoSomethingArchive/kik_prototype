@@ -18,10 +18,6 @@ define(
 
       template: '',
 
-      // Data to package into a Kik card for sharing
-      answers: [],
-      questionSet: -1,
-
       el: $('#page-content'),
 
       /**
@@ -44,9 +40,6 @@ define(
           }
         }
 
-        this.answerUsername = data.answerUsername;
-        this.questionNum = questionNum;
-
         this.$el.empty();
         this.$el.append(_.template(template,data));
 
@@ -68,7 +61,7 @@ define(
         if (data.selected_by) {
           data.selected_by = JSON.parse(data.selected_by);
 
-          var question = AppRouter.getQuestion();
+          var question = AppRouter.getQuestionNum();
           if (data.selected_by[question]) {
             // Remove myself from the list
             var user = Storage.getUserData();
@@ -177,14 +170,13 @@ define(
        * Create Kik card to share results with friends.
        */
       share: function(evt) {
-        console.log('share button clicked');
-        console.log('answers: ' + JSON.stringify(this.answers));
-
         if (cards.kik !== undefined) {
+          var question = AppRouter.getQuestionNum();
+
           cards.kik.send({
             'title': 'DS Kik Card Test',
-            'text': 'More mobile team, please.',
-            'data': {set: this.questionSet, answers: this.answers},
+            'text': AppRouter.getQuestionText(question) || 'More mobile team, please',
+            'data': {question: question},
           });
         }
       },

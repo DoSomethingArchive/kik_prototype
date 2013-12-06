@@ -12,7 +12,7 @@
     <span class="choiceUsername"><%= answerUsername %></span>
   </div>
   <div>These people agree with you:</div>
-  <div id="<%= answerUsername %>-selectedBy"></div>
+  <div id="<%= answerUsername %>-selectedBy">Nobody...</div>
 
   <%  for (var index = 0; index < friends.length; index++) {
         if (friends[index].username != answerUsername) { %>
@@ -20,8 +20,8 @@
           <img class="choiceImg" src="<%= friends[index].thumbnail %>"/>
           <span class="choiceUsername"><%= friends[index].username %></span>
         </div>
-        <div>Also selected by:</div>
-        <div id="<%= friends[index].username %>-selectedBy"></div>
+        <div>Voted by:</div>
+        <div id="<%= friends[index].username %>-selectedBy" class="facepile">Nobody...</div>
   <%    }
       } %>
 

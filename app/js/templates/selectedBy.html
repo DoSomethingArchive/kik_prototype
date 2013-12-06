@@ -1,3 +1,7 @@
-<% for (var index = 0; index < data.length; index++) { %>
-    <img class="facepile-item" src="<%= data[index].thumbnail %>"/>
-<% } %>
+<%  if (data.length > 0) {
+      for (var index = 0; index < data.length; index++) { %>
+        <img class="facepile-item" src="<%= data[index].thumbnail %>"/>
+<%    }
+    } else { %>
+      Nobody...
+<%  } %>

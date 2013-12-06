@@ -9,7 +9,10 @@ var application_root = __dirname,
 ////////////////////
 
 // Setup Mongo database connection, schemas, and models
-mongoose.connect('mongodb://localhost/kik_prototype_db');
+var mongoUri = process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL ||
+  'mongodb://localhost/kik_prototype_db';
+mongoose.connect(mongoUri);
 
 // Schemas
 var UserSchema = new mongoose.Schema({

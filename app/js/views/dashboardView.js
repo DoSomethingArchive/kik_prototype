@@ -124,51 +124,50 @@ define(
             // Save the user data to localStorage
             Storage.setUserData(user);
 
-            // Save the user data to the server
             var userData = {
               thumbnail: user.thumbnail,
               username: user.username
             };
 
+            // Save the username and thumbnail to the server
             $.post(
               AppRouter.apiGetUserUrl(),
               userData,
               function(data, textStatus, jqXHR) {
                 console.dir(data);
                 console.log(textStatus);
+
+                // Then save the user push token to the server
+                if (cards.push && cards.push.getToken) {
+                  cards.push.getToken(function(token) {
+                    if (!token)
+                      return;
+
+                    console.log('cards.push.getToken(): ' + token);
+
+                    // Save the push token to localStorage
+                    Storage.setPushToken(token);
+
+                    var user = Storage.getUserData();
+
+                    // Save the push_token data to the server
+                    var userData = {
+                      push_token: token,
+                      username: user.username
+                    };
+
+                    $.post(
+                      AppRouter.apiGetUserUrl(),
+                      userData,
+                      function(data, textStatus, jqXHR) {
+                        console.dir(data);
+                        console.log(textStatus);
+                      }
+                    );
+                  });
+                }
               }
             );
-
-            // Asynchronously get the push token. This does not need to block
-            // the start of the questions.
-            if (cards.push && cards.push.getToken) {
-              cards.push.getToken(function(token) {
-                if (!token)
-                  return;
-
-                console.log('cards.push.getToken(): ' + token);
-
-                // Save the push token to localStorage
-                Storage.setPushToken(token);
-
-                var user = Storage.getUserData();
-
-                // Save the push_token data to the server
-                var userData = {
-                  push_token: token,
-                  username: user.username
-                };
-
-                $.post(
-                  AppRouter.apiGetUserUrl(),
-                  userData,
-                  function(data, textStatus, jqXHR) {
-                    console.dir(data);
-                    console.log(textStatus);
-                  }
-                );
-              });
-            }
 
             // Start the questions
             AppRouter.goToNextQuestion();

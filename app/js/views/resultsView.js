@@ -4,10 +4,11 @@ define(
     'underscore',
     'backbone',
     'storage',
-    'text!templates/results.html'
+    'text!templates/results.html',
+    'text!templates/selectedBy.html',
   ],
 
-  function($, _, Backbone, Storage, template) {
+  function($, _, Backbone, Storage, template, tplSelectedBy) {
     var ResultsView = Backbone.View.extend({
       events: {
         'click .nextQuestion': 'nextQuestion',
@@ -49,8 +50,45 @@ define(
         this.$el.empty();
         this.$el.append(_.template(template,data));
 
+        // Find out what other people voted on
+        this.getFriendUserData();
+
         // Submit results to server
         this.postAnswer(questionNum, data.answerUsername);
+      },
+
+      /**
+       * Callback for GET call in getFriendUserData().
+       * Uses data retrieved to display who else selected a given person.
+       */
+      renderFriendData: function(data) {
+        if (data.answers)
+          data.answers = JSON.parse(data.answers);
+
+        if (data.selected_by) {
+          data.selected_by = JSON.parse(data.selected_by);
+
+          var question = AppRouter.getQuestion();
+          if (data.selected_by[question]) {
+            // Remove myself from the list
+            var user = Storage.getUserData();
+            for (var i = 0; user && i < data.selected_by[question].length; i++) {
+              if (data.selected_by[question][i].username == user.username) {
+                data.selected_by[question].splice(i, 1);
+                break;
+              }
+            }
+
+            // Update facepile block with remaining users
+            if (data.selected_by[question].length > 0) {
+              var id = '#' + data.username + '-selectedBy';
+              if ($(id)) {
+                var tplData = {data: data.selected_by[question]};
+                $(id).append(_.template(tplSelectedBy, tplData));
+              }
+            }
+          }
+        }
       },
 
       /**
@@ -58,6 +96,22 @@ define(
        */
       nextQuestion: function() {
         AppRouter.goToNextQuestion();
+      },
+
+      /**
+       * Get user data for each friend.
+       */
+      getFriendUserData: function() {
+        var friends = Storage.getFriendsList();
+        for (var i = 0; i < friends.length; i++) {
+
+          $.get(
+            AppRouter.apiGetUserUrl(),
+            {user: friends[i].username},
+            this.renderFriendData
+          );
+
+        }
       },
 
       /**

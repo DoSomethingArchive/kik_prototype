@@ -24,6 +24,28 @@ var UserSchema = new mongoose.Schema({
 var UserModel = mongoose.model('User', UserSchema);
 
 /**
+ * Get the user data
+ *
+ * @param string username
+ * @param object response
+ */
+var getUserData = function(username, response) {
+  console.log('Querying user data for: %s', username);
+
+  UserModel.findOne(
+    {username: username},
+    function(err, doc) {
+      var responseData = {};
+      if (doc) {
+        responseData = doc;
+      }
+
+      response.send(responseData);
+    }
+  );
+};
+
+/**
  * Log in the database that a user has selected for a question, and by whome
  *
  * @param object requestBody
@@ -44,6 +66,13 @@ var saveToSelectedBy = function(requestBody) {
       // The user has an already existing doc
       if (doc && doc.selected_by) {
         userData.selected_by = JSON.parse(doc.selected_by);
+
+        // Check if user's already been added to the selected_by array before
+        for (var i = 0; userData.selected_by[requestBody.question] && i < userData.selected_by[requestBody.question].length; i++) {
+          if (userData.selected_by[requestBody.question][i].username == requestBody.username) {
+            userData.selected_by[requestBody.question].splice(i, 1);
+          }
+        }
       }
 
       if (!userData.selected_by[requestBody.question]) {
@@ -51,7 +80,11 @@ var saveToSelectedBy = function(requestBody) {
       }
 
       // Push username and thumbnail into selectedBy array for the given question
-      userData.selected_by[requestBody.question].push(requestBody.username);
+      var selectedBy = {
+        username: requestBody.username,
+        thumbnail: requestBody.thumbnail
+      };
+      userData.selected_by[requestBody.question].push(selectedBy);
 
       // Convert selected_by back into a JSON string
       userData.selected_by = JSON.stringify(userData.selected_by);
@@ -158,7 +191,7 @@ var saveUserModel = function(request, response) {
       }
     }
   );
-}
+};
 
 
 ///////////////////
@@ -198,6 +231,18 @@ app.listen(port, function() {
 
 app.get('/api', function(request, response) {
   response.send('hello api');
+});
+
+/**
+ * GET /api/user
+ * Retrieve user data
+ */
+app.get('/api/user', function(request, response) {
+  if (!request.query.user) {
+    return response.send(400, 'Missing user field in the query.');
+  }
+
+  getUserData(request.query.user, response);
 });
 
 /**

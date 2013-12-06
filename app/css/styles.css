@@ -62,6 +62,16 @@ h4, h5 {
   top: 16px;
 }
 
+.dashboardContent {
+  padding: 0 10px;
+}
+
+.dashboardIntro {
+  background-color: #666;
+  border-bottom: 1px dotted white;
+  padding: 20px 10px;
+}
+
 .facepile {
   margin-left: 10px;
 }
@@ -87,6 +97,12 @@ h4, h5 {
   position: relative;
 }
 
+.header {
+  background-color: #666;
+  margin: 0px;
+  padding: 30px 20px 20px 20px;
+}
+
 .nextQuestion {
   background-color: #8cc026;
   border: 1px solid white;
@@ -101,8 +117,14 @@ h4, h5 {
     background-color: #add137;
   }
 
-.question-set {
-  margin: 20px 0;
+.question {
+  background-color: #666;
+  border-bottom: 1px solid white;
+  padding: 20px 10px;
+}
+
+.questionChoices {
+  padding: 0 10px;
 }
 
 .restart {
@@ -168,6 +190,5 @@ h4, h5 {
 .stat {
   background-color: #666;
   border-bottom: 1px solid white;
-  padding: 20px;
 
 }

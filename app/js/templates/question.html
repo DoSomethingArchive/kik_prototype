@@ -1,7 +1,8 @@
-<h1>Kik Prototype</h1>
+<h1 class="header">Kik Prototype</h1>
 
 <div class="question"><%= question %></div>
 
+<div class="questionChoices">
 <% for (var index = 0; index < friends.length; index++) { %>
 
   <div id="choice-<%=index%>" class="choice">
@@ -10,5 +11,6 @@
   </div>
 
 <% } %>
+</div>
 
 <div class="restart">Restart</div>

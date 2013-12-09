@@ -92,7 +92,7 @@ define(
        */
       showResults: function(questionNum) {
         var onModelFetched = function(data) {
-          this.resultsView = new ResultsView();
+          this.resultsView = this.resultsView || new ResultsView();
           this.resultsView.render(questionNum, data);
         };
 

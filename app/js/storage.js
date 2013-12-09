@@ -27,6 +27,32 @@ define(function() {
       localStorage.setItem(key, jsonUsers);
     },
 
+    getNumQuestionsAnswered: function() {
+      var key = this.keyBase + 'num_questions_answered';
+      var num = localStorage.getItem(key);
+      if (num)
+        return parseInt(num, 10);
+      else
+        return 0;
+    },
+
+    incrementNumQuestionsAnswered: function() {
+      var key = this.keyBase + 'num_questions_answered';
+      var num = localStorage.getItem(key);
+
+      // Update current number or start at 1.
+      if (num) {
+        num = parseInt(num, 10);
+        num++;
+      }
+      else {
+        num = 1;
+      }
+
+      // Save to local storage
+      localStorage.setItem(key, num);
+    },
+
     /**
      * Get the user's Kik push token.
      *
@@ -96,6 +122,9 @@ define(function() {
     setQuestionAnswer: function(question, username) {
       var key = this.keyBase + 'question_' + question;
       localStorage.setItem(key, username);
+
+      // Also incremement the number of questions answered and save
+      this.incrementNumQuestionsAnswered();
     },
   };
 });

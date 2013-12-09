@@ -16,6 +16,9 @@ define(
         'click .share': 'share',
       },
 
+      // After how many consecutive questions do we show the share button
+      showShareFrequency: 3,
+
       template: '',
 
       el: $('#page-content'),
@@ -45,6 +48,14 @@ define(
 
         // Find out what other people voted on
         this.getFriendUserData(data.answerUsername);
+
+        // Determine if we should show the share section
+        if (Storage.getNumQuestionsAnswered() % this.showShareFrequency === 0) {
+          $('#shareContent').show();
+        }
+        else {
+          $('#shareContent').hide();
+        }
 
         // Submit results to server
         this.postAnswer(questionNum, data.answerUsername);
@@ -89,7 +100,7 @@ define(
       /**
        * Go to the next question.
        */
-      nextQuestion: function() {
+      nextQuestion: function(evt) {
         AppRouter.goToNextQuestion();
       },
 

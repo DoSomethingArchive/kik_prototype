@@ -44,7 +44,7 @@ define(
         this.$el.append(_.template(template,data));
 
         // Find out what other people voted on
-        this.getFriendUserData();
+        this.getFriendUserData(data.answerUsername);
 
         // Submit results to server
         this.postAnswer(questionNum, data.answerUsername);
@@ -96,17 +96,12 @@ define(
       /**
        * Get user data for each friend.
        */
-      getFriendUserData: function() {
-        var friends = Storage.getFriendsList();
-        for (var i = 0; i < friends.length; i++) {
-
-          $.get(
-            AppRouter.apiGetUserUrl(),
-            {user: friends[i].username},
-            this.renderFriendData
-          );
-
-        }
+      getFriendUserData: function(username) {
+        $.get(
+          AppRouter.apiGetUserUrl(),
+          {user: username},
+          this.renderFriendData
+        );
       },
 
       /**

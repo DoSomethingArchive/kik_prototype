@@ -14,17 +14,6 @@
   <div>These people agree with you:</div>
   <div id="<%= answerUsername %>-selectedBy">Nobody...</div>
 
-  <%  for (var index = 0; index < friends.length; index++) {
-        if (friends[index].username != answerUsername) { %>
-        <div class="resultsNotSelected">
-          <img class="choiceImg" src="<%= friends[index].thumbnail %>"/>
-          <span class="choiceUsername"><%= friends[index].username %></span>
-        </div>
-        <div>Voted by:</div>
-        <div id="<%= friends[index].username %>-selectedBy" class="facepile">Nobody...</div>
-  <%    }
-      } %>
-
   <div class="share">Share with Friends</div>
   <div class="nextQuestion">Next Question</div>
   <div class="restart">Restart</div>

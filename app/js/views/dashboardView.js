@@ -14,7 +14,6 @@ define(
         'click #pickFriends': 'pickFriends',
         'click #startQuestions': 'startQuestions',
         'click #reset': 'reset',
-        'click #reload': 'reload',
       },
 
       el: $('#page-content'),
@@ -52,7 +51,7 @@ define(
               users.forEach(function(user) {
                 // If user does not have a thumbnail, replace it with a default
                 if (!user.thumbnail) {
-                  user.thumbnail = 'img/aaron.jpg';
+                  user.thumbnail = 'img/kik-icon_256x256.png';
                 }
 
                 // Cull out unneeded data (to minimize data saved to localStorage)
@@ -73,6 +72,7 @@ define(
               // Hide the friend picker button and show the button to get started
               $('#pickFriends').hide();
               $('#startQuestions').show();
+              $('#reset').show();
             }
           );
         }
@@ -82,15 +82,15 @@ define(
             users: [
               {
                 username: 'test_user_1',
-                thumbnail: 'img/aaron.jpg'
+                thumbnail: 'img/kik-icon_256x256.png'
               },
               {
                 username: 'test_user_2',
-                thumbnail: 'img/aaron.jpg'
+                thumbnail: 'img/kik-icon_256x256.png'
               },
               {
                 username: 'test_user_3',
-                thumbnail: 'img/aaron.jpg'
+                thumbnail: 'img/kik-icon_256x256.png'
               }
             ]
           };
@@ -103,6 +103,7 @@ define(
 
           $('#pickFriends').hide();
           $('#startQuestions').show();
+          $('#reset').show();
         }
       },
 
@@ -186,13 +187,7 @@ define(
         $('#friends-list').empty();
         $('#pickFriends').show();
         $('#startQuestions').hide();
-      },
-
-      /**
-       * For dev use. Reload the page.
-       */
-      reload: function(evt) {
-        window.location.reload();
+        $('#reset').hide();
       },
     });
 

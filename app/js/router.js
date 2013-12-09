@@ -60,6 +60,7 @@ define(
           }
         }
 
+        $('#loading').hide();
         var dashboardView = new DashboardView();
         dashboardView.render();
       },

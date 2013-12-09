@@ -11,7 +11,7 @@ define(
     var QuestionView = Backbone.View.extend({
       events: {
         'click .choice': 'selectChoice',
-        'click .restart': 'restart',
+        'click .header': 'restart',
       },
 
       currentQuestion: -1,

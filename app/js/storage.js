@@ -27,8 +27,13 @@ define(function() {
       localStorage.setItem(key, jsonUsers);
     },
 
-    getNumQuestionsAnswered: function() {
-      var key = this.keyBase + 'num_questions_answered';
+    /**
+     * Get the counter used for tracking when to show the share button.
+     *
+     * @return int
+     */
+    getShowShareCounter: function() {
+      var key = this.keyBase + 'show_share_counter';
       var num = localStorage.getItem(key);
       if (num)
         return parseInt(num, 10);
@@ -36,8 +41,11 @@ define(function() {
         return 0;
     },
 
-    incrementNumQuestionsAnswered: function() {
-      var key = this.keyBase + 'num_questions_answered';
+    /**
+     * Increments the counter for tracking when to show the share button.
+     */
+    incrementShowShareCounter: function() {
+      var key = this.keyBase + 'show_share_counter';
       var num = localStorage.getItem(key);
 
       // Update current number or start at 1.
@@ -51,6 +59,14 @@ define(function() {
 
       // Save to local storage
       localStorage.setItem(key, num);
+    },
+
+    /**
+     * Resets the counter to 0 for tracking when to show the share button.
+     */
+    resetShowShareCounter: function() {
+      var key = this.keyBase + 'show_share_counter';
+      localStorage.setItem(key, 0);
     },
 
     /**
@@ -124,7 +140,7 @@ define(function() {
       localStorage.setItem(key, username);
 
       // Also incremement the number of questions answered and save
-      this.incrementNumQuestionsAnswered();
+      this.incrementShowShareCounter();
     },
   };
 });

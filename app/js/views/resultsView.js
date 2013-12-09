@@ -6,9 +6,11 @@ define(
     'storage',
     'text!templates/results.html',
     'text!templates/selectedBy.html',
+    'text!templates/shareAsFirst.html',
+    'text!templates/shareContent.html',
   ],
 
-  function($, _, Backbone, Storage, template, tplSelectedBy) {
+  function($, _, Backbone, Storage, template, tplSelectedBy, tplShareAsFirst, tplShareContent) {
     var ResultsView = Backbone.View.extend({
       events: {
         'click .nextQuestion': 'nextQuestion',
@@ -50,11 +52,11 @@ define(
         this.getFriendUserData(data.answerUsername);
 
         // Determine if we should show the share section
-        if (Storage.getNumQuestionsAnswered() % this.showShareFrequency === 0) {
-          $('#shareContent').show();
+        if (Storage.getShowShareCounter() % this.showShareFrequency === 0) {
+          $('#shareContent').append(tplShareContent);
         }
         else {
-          $('#shareContent').hide();
+          $('#shareContent').empty();
         }
 
         // Submit results to server
@@ -69,6 +71,7 @@ define(
         if (data.answers)
           data.answers = JSON.parse(data.answers);
 
+        var showSharePrompt = true;
         if (data.selected_by) {
           data.selected_by = JSON.parse(data.selected_by);
 
@@ -85,6 +88,10 @@ define(
 
             // Update facepile block with remaining users
             if (data.selected_by[question].length > 0) {
+              showSharePrompt = false;
+              $('#shareAsFirst').empty();
+              $('#facepile').show();
+
               var id = '#' + data.username + '-selectedBy';
               if ($(id)) {
                 $(id).empty();
@@ -94,6 +101,17 @@ define(
               }
             }
           }
+        }
+
+        if (showSharePrompt) {
+          var tplData = {};
+          tplData.answerUsername = Storage.getQuestionAnswer(AppRouter.getQuestionNum());
+
+          Storage.resetShowShareCounter();
+          $('#shareAsFirst').append(_.template(tplShareAsFirst, tplData));
+
+          $('#facepile').hide();
+          $('#shareContent').empty();
         }
       },
 
@@ -181,7 +199,7 @@ define(
 
           cards.kik.send({
             'title': 'DS Kik Card Test',
-            'text': AppRouter.getQuestionText(question) || 'More mobile team, please',
+            'text': $(AppRouter.getQuestionText(question)).text() || 'More mobile team, please',
             'data': {question: question},
           });
         }

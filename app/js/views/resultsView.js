@@ -92,6 +92,15 @@ define(
               $('#shareAsFirst').empty();
               $('#facepile').show();
 
+              var facepileText = "These people agree with you:";
+              if (data.selected_by[question].length > 1) {
+                facepileText = data.selected_by[question].length + "people agree with you:";
+              }
+              else {
+                facepileText = "One person agrees with you:";
+              }
+              $('#facepileText').text(facepileText);
+
               var id = '#' + data.username + '-selectedBy';
               if ($(id)) {
                 $(id).empty();

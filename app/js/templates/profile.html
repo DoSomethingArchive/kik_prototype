@@ -1,0 +1,20 @@
+<div class="header">
+  <h1>Profile</h1>
+</div>
+
+<div class="profileContent">
+  <% if (results.length == 0) { %>
+      <p>Hmm... seems no one has picked you for anything. Maybe share it with someone...</p>
+  <% } else { %>
+    <% for (var i = 0; i < results.length; i++) { %>
+        <div class="profileQuestion">Q: <%= results[i].question %></div>
+
+      <% for (var j = 0; j < results[i].selectedBy.length; j++) { %>
+          <div class="profileFacepile">
+            <div>Who Picked You:</div>
+            <img src="<%= results[i].selectedBy[j].thumbnail %>" class="facepile-item"/>
+          </div>
+      <% } %>
+    <% } %>
+  <% } %>
+</div>

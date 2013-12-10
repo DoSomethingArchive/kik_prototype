@@ -196,10 +196,13 @@ define(
       share: function(evt) {
         if (cards.kik !== undefined) {
           var question = AppRouter.getQuestionNum();
+          // Seems sorta hacky, but whatever. Making the text valid html, in case
+          // it's not, for jQuery to be able to process.
+          var questionHtml = '<div>' + AppRouter.getQuestionText(question) + '</div>';
 
           cards.kik.send({
             'title': 'DS Kik Card Test',
-            'text': $(AppRouter.getQuestionText(question)).text() || 'More mobile team, please',
+            'text': $(questionHtml).text() || 'More mobile team, please',
             'data': {question: question},
           });
         }

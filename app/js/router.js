@@ -6,15 +6,17 @@ define(
     'storage',
     'models/questionsModel',
     'views/dashboardView',
+    'views/profileView',
     'views/questionView',
     'views/resultsView',
     'views/testView',
   ],
 
-  function($, _, Backbone, Storage, QuestionsModel, DashboardView, QuestionView, ResultsView, TestView) {
+  function($, _, Backbone, Storage, QuestionsModel, DashboardView, ProfileView, QuestionView, ResultsView, TestView) {
     var Router = Backbone.Router.extend({
       routes: {
         '': 'showDashboard',
+        'profile': 'showProfile',
         'question/:questionNum' : 'showQuestion',
         'results/:questionNum': 'showResults',
         'test': 'showTest',
@@ -63,6 +65,25 @@ define(
         $('#loading').hide();
         var dashboardView = new DashboardView();
         dashboardView.render();
+      },
+
+      /**
+       * Display the profile page.
+       */
+      showProfile: function() {
+        var onModelFetched = function(model) {
+          this.profileView = this.profileView || new ProfileView();
+          this.profileView.render(model);
+        };
+
+        // Need questions data
+        if (!this.questionsModel) {
+          this.questionsModel = new QuestionsModel();
+          this.questionsModel.fetch({success:onModelFetched});
+        }
+        else {
+          onModelFetched(this.questionsModel);
+        }
       },
 
       /**
@@ -155,6 +176,13 @@ define(
         }
 
         window.location.href = this.getBaseUrl() + '#question/' + question;
+      },
+
+      /**
+       * Change URL to the profile page.
+       */
+      goToProfile: function() {
+        window.location.href = this.getBaseUrl() + '#profile';
       },
 
       /**

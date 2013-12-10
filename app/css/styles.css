@@ -114,6 +114,13 @@ h4, h5 {
   padding: 30px 20px 20px 20px;
 }
 
+.meIcon {
+  position: absolute;
+  right: 10px;
+  top: 30px;
+  width: 48px;
+}
+
 .nextQuestion {
   background-color: #8cc026;
   border: 1px solid white;
@@ -127,6 +134,19 @@ h4, h5 {
   .nextQuestion:hover {
     background-color: #add137;
   }
+
+.profileContent {
+  margin: 0 10px;
+}
+
+.profileFacepile {
+  border-bottom: 1px solid white;
+  padding-bottom: 10px;
+}
+
+.profileQuestion {
+  margin: 20px 0;
+}
 
 .question {
   background-color: #666;

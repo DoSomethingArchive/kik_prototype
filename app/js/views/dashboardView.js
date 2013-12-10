@@ -14,6 +14,7 @@ define(
         'click #pickFriends': 'pickFriends',
         'click #startQuestions': 'startQuestions',
         'click #reset': 'reset',
+        'click .meIcon': 'profile',
       },
 
       el: $('#page-content'),
@@ -81,8 +82,8 @@ define(
           var dummyData = {
             users: [
               {
-                username: 'test_user_1',
-                thumbnail: 'img/kik-icon_256x256.png'
+                username: 'shishab',
+                thumbnail: '//d33vud085sp3wg.cloudfront.net/xZRqqPCumIZnDH9jcjMk1O1IR-o/thumb.jpg'
               },
               {
                 username: 'test_user_2',
@@ -178,6 +179,10 @@ define(
         else {
           AppRouter.goToNextQuestion();
         }
+      },
+
+      profile: function(evt) {
+        AppRouter.goToProfile();
       },
 
       /**

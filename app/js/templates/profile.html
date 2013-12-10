@@ -9,12 +9,12 @@
     <% for (var i = 0; i < results.length; i++) { %>
         <div class="profileQuestion">Q: <%= results[i].question %></div>
 
-      <% for (var j = 0; j < results[i].selectedBy.length; j++) { %>
-          <div class="profileFacepile">
-            <div>Who Picked You:</div>
+        <div class="profileFacepile">
+          <div>Who Picked You:</div>
+          <% for (var j = 0; j < results[i].selectedBy.length; j++) { %>
             <img src="<%= results[i].selectedBy[j].thumbnail %>" class="facepile-item"/>
-          </div>
-      <% } %>
+          <% } %>
+        </div>
     <% } %>
   <% } %>
 </div>

@@ -11,6 +11,7 @@ define(
     var ProfileView = Backbone.View.extend({
       events: {
         'click h1': 'restart',
+        'click .headerIcon': 'restart',
       },
 
       el: $('#page-content'),

@@ -3,14 +3,21 @@
 </div>
 
 <div class="profileContent">
-  <% if (results.length == 0) { %>
+  <% if (!results || results.length == 0) { %>
       <p>Hmm... seems no one has picked you for anything. Maybe share it with someone...</p>
   <% } else { %>
     <% for (var i = 0; i < results.length; i++) { %>
         <div class="profileQuestion">Q: <%= results[i].question %></div>
 
         <div class="profileFacepile">
-          <div>Who Picked You:</div>
+          <div>
+          <% if (results[i].selectedBy.length == 1) { %>
+              1 Person Picked You:
+          <% } else { %>
+              <%= results[i].selectedBy.length %> People Picked You:
+          <% } %>
+          </div>
+
           <% for (var j = 0; j < results[i].selectedBy.length; j++) { %>
             <img src="<%= results[i].selectedBy[j].thumbnail %>" class="facepile-item"/>
           <% } %>

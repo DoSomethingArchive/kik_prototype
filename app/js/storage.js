@@ -10,7 +10,7 @@ define(function() {
     getFriendsList: function() {
       var key = this.keyBase + 'friends_list';
       var jsonUsers = localStorage.getItem(key);
-      if (jsonUsers)
+      if (jsonUsers && jsonUsers != 'undefined')
         return JSON.parse(jsonUsers);
       else
         return null;
@@ -99,7 +99,7 @@ define(function() {
     getUserData: function() {
       var key = this.keyBase + 'user_data';
       var jsonUser = localStorage.getItem(key);
-      if (jsonUser)
+      if (jsonUser && jsonUser != 'undefined')
         return JSON.parse(jsonUser);
       else
         return null;

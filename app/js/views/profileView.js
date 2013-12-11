@@ -35,9 +35,14 @@ define(
             this.fetchUserData(userData.username);
           });
         }
-        else {
+        else if (userData) {
           // Get user data from API service
           this.fetchUserData(userData.username);
+        }
+        else {
+          // Render empty set
+          this.$el.empty();
+          this.$el.append(_.template(template));
         }
       },
 

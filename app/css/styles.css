@@ -84,11 +84,8 @@ h4, h5 {
 }
 
 .facepile-item {
+  margin: 3px;
   width: 32px;
-}
-
-.friendsListImg {
-  height: 32px;
 }
 
 .friendsListUsername {
@@ -99,15 +96,9 @@ h4, h5 {
 }
 
 .friendsListRow {
-  border-bottom: 1px solid #f4f4f4;
-  padding: 10px;
-  position: relative;
+  margin: 0 10px;
+  text-align: center;
 }
-
-  .friendsListRow:last-child {
-    border-bottom: none;
-  }
-
 .header {
   background-color: #666;
   margin: 0px;

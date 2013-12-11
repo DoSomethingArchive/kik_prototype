@@ -1,10 +1,8 @@
-<div>Your selected friends:</div>
+<div class="friendsListRow">
+  <div>You selected <%= users.length %> friends:</div>
 
-<% users.forEach(function(user) { %>
+  <% users.forEach(function(user) { %>
+    <img class="facepile-item" src="<%= user.thumbnail %>"/>
+  <% }); %>
 
-  <div class="friendsListRow">
-    <img class="friendsListImg" src="<%= user.thumbnail %>"/>
-    <span class="friendsListUsername"><%= user.username %></span>
-  </div>
-
-<% }); %>
+</div>

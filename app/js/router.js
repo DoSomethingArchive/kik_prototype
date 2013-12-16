@@ -27,6 +27,14 @@ define(
 
       initialize: function() {
         Backbone.history.start();
+
+        return this.bind('route', this._trackPageview);
+      },
+
+      _trackPageview: function() {
+        var url;
+        url = Backbone.history.getFragment();
+        return ga('send', 'pageview', "/#{url}");
       },
 
       /**

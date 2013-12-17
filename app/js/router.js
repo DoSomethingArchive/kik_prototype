@@ -4,6 +4,7 @@ define(
     'underscore',
     'backbone',
     'storage',
+    'cards',
     'models/questionsModel',
     'views/dashboardView',
     'views/profileView',
@@ -12,7 +13,7 @@ define(
     'views/testView',
   ],
 
-  function($, _, Backbone, Storage, QuestionsModel, DashboardView, ProfileView, QuestionView, ResultsView, TestView) {
+  function($, _, Backbone, Storage, cards, QuestionsModel, DashboardView, ProfileView, QuestionView, ResultsView, TestView) {
     var Router = Backbone.Router.extend({
       routes: {
         '': 'showDashboard',

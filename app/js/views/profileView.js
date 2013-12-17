@@ -4,10 +4,11 @@ define(
     'underscore',
     'backbone',
     'storage',
+    'cards',
     'text!templates/profile.html',
   ],
 
-  function($, _, Backbone, Storage, template) {
+  function($, _, Backbone, Storage, cards, template) {
     var ProfileView = Backbone.View.extend({
       events: {
         'click h1': 'restart',

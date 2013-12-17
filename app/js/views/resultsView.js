@@ -4,13 +4,14 @@ define(
     'underscore',
     'backbone',
     'storage',
+    'cards',
     'text!templates/results.html',
     'text!templates/selectedBy.html',
     'text!templates/shareAsFirst.html',
     'text!templates/shareContent.html',
   ],
 
-  function($, _, Backbone, Storage, template, tplSelectedBy, tplShareAsFirst, tplShareContent) {
+  function($, _, Backbone, Storage, cards, template, tplSelectedBy, tplShareAsFirst, tplShareContent) {
     var ResultsView = Backbone.View.extend({
       events: {
         'click .nextQuestion': 'nextQuestion',

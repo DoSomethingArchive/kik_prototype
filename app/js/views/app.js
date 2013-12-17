@@ -4,9 +4,10 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'router'
+    'router',
+    'cards',
   ],
-  function($, _, Backbone, Router) {
+  function($, _, Backbone, Router, cards) {
     var AppView = Backbone.View.extend({
       initialize: function() {
         AppRouter = new Router();

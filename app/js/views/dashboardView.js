@@ -4,11 +4,12 @@ define(
     'underscore',
     'backbone',
     'storage',
+    'cards',
     'text!templates/dashboard.html',
     'text!templates/friendsList.html',
   ],
 
-  function($, _, Backbone, Storage, tplDashboard, tplFriendsList) {
+  function($, _, Backbone, Storage, cards, tplDashboard, tplFriendsList) {
     var DashboardView = Backbone.View.extend({
       events: {
         'click #pickFriends': 'pickFriends',

@@ -3,10 +3,11 @@ define(
     'jquery',
     'underscore',
     'backbone',
+    'cards',
     'text!templates/test.html'
   ],
 
-  function($, _, Backbone, template) {
+  function($, _, Backbone, cards, template) {
     var TestView = Backbone.View.extend({
       events: {
         'click #startQuiz': 'startQuiz',

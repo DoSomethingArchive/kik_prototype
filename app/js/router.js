@@ -28,9 +28,18 @@ define(
       initialize: function() {
         Backbone.history.start();
 
+        // Enables Kik event tracking for Google Analytics
+        if (cards.metrics) {
+          cards.metrics.enableGoogleAnalytics();
+        }
+
+        // Bind routing events to track page views
         return this.bind('route', this._trackPageview);
       },
 
+      /**
+       * Tracks a pageview to Google Analytics.
+       */
       _trackPageview: function() {
         var url;
         url = Backbone.history.getFragment();

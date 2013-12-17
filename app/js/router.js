@@ -183,17 +183,56 @@ define(
        * Change URL to go to the next question in this set
        */
       goToNextQuestion: function() {
-        var question = 0 ;
-        if (this.nextQuestionOverride) {
-          question = this.nextQuestionOverride;
-          this.nextQuestionOverride = undefined;
-        }
-        else if (window.location.hash.length > 0) {
-          hashVals = window.location.hash.split('/');
-          question = parseInt(hashVals[1], 10) + 1; // increment the question index
-        }
+        var onModelFetched = function(model) {
+          var question = 0 ;
+          if (AppRouter.nextQuestionOverride) {
+            question = AppRouter.nextQuestionOverride;
+            AppRouter.nextQuestionOverride = undefined;
+          }
+          else if (model) {
+            // Get # of available questions
+            var numQuestions = 0
+            for (var keys in model.attributes) {
+              numQuestions++;
+            }
 
-        window.location.href = this.getBaseUrl() + '#question/' + question;
+            // Get an array of the questions asked
+            var questionsAsked = Storage.getQuestionsAsked();
+
+            // If the user's already been asked all the questions, clear the cache and start over
+            if (questionsAsked && questionsAsked.length == numQuestions) {
+              Storage.clearQuestionsAsked();
+              questionsAsked = [];
+            }
+
+            var questionSelected = false;
+            while (!questionSelected) {
+              // Randomly select a # in the range of available questions
+              var randomNum = Math.floor(Math.random() * numQuestions);
+              randomNum = randomNum.toString();
+
+              // Use the question if it's not found in the list of questions asked
+              if (!questionsAsked || questionsAsked.indexOf(randomNum) == -1) {
+                questionSelected = true;
+                question = randomNum;
+              }
+            }
+          }
+          else if (window.location.hash.length > 0) {
+            hashVals = window.location.hash.split('/');
+            question = parseInt(hashVals[1], 10) + 1; // increment the question index
+          }
+
+          window.location.href = AppRouter.getBaseUrl() + '#question/' + question;
+        };
+
+        if (!this.questionsModel) {
+          this.questionsModel = new QuestionsModel();
+          this.questionsModel.fetch({success:onModelFetched});
+        }
+        else {
+          onModelFetched(this.questionsModel);
+        }
       },
 
       /**

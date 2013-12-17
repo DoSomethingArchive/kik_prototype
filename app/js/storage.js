@@ -139,8 +139,56 @@ define(function() {
       var key = this.keyBase + 'question_' + question;
       localStorage.setItem(key, username);
 
+      // Mark this question as having been asked
+      this.setQuestionAsked(question);
+
       // Also incremement the number of questions answered and save
       this.incrementShowShareCounter();
+    },
+
+    /**
+     * Remove questions asked data.
+     */
+    clearQuestionsAsked: function() {
+      var key = this.keyBase + 'questions_asked';
+      localStorage.removeItem(key);
+    },
+
+    /**
+     * Get array of questions asked.
+     *
+     * @return array of question indices
+     */
+    getQuestionsAsked: function() {
+      var key = this.keyBase + 'questions_asked';
+
+      var questions = localStorage.getItem(key);
+      if (questions && questions != 'undefined')
+        return JSON.parse(questions);
+      else
+        return null;
+    },
+
+    /**
+     * Save question index as being asked.
+     *
+     * @param int question
+     */
+    setQuestionAsked: function(question) {
+      var key = this.keyBase + 'questions_asked';
+
+      var questions = [];
+      var jsonQuestions = localStorage.getItem(key);
+      if (jsonQuestions && jsonQuestions != 'undefined') {
+        questions = JSON.parse(jsonQuestions);
+      }
+
+      question = question.toString();
+      if (questions.indexOf(question) == -1) {
+        questions[questions.length] = question;
+      }
+
+      localStorage.setItem(key, JSON.stringify(questions));
     },
   };
 });

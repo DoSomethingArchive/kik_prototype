@@ -15,7 +15,7 @@ define(
         'click #pickFriends': 'pickFriends',
         'click #startQuestions': 'startQuestions',
         'click #reset': 'reset',
-        'click .headerIcon': 'profile',
+        'click .profileIcon': 'profile',
       },
 
       el: $('#page-content'),

@@ -44,11 +44,11 @@ h4, h5 {
   }
 
 .button.pickFriends {
-  background-color: #ef4135;
+  background-color: #E96857;
 }
 
   .button.pickFriends:hover {
-    background-color: #ff5246;
+    background-color: #FF5246;
   }
 
 .button.startQuestions {
@@ -61,16 +61,17 @@ h4, h5 {
   }
 
 .choice {
-  background-color: #5e9fe0;
+  background-color: #8CC026;
   border: 1px solid white;
   border-radius: 5px;
+  color: #EEEEEE;
   margin: 20px 0;
   padding: 10px;
   position: relative;
 }
 
   .choice:hover {
-    background-color: #4273da;
+    background-color: #ADD137;
   }
 
 .choiceImg {
@@ -92,7 +93,7 @@ h4, h5 {
   background-color: #23B7FB;
   border-bottom: 1px dotted white;
   color: #EEEEEE;
-  padding: 20px 10px;
+  padding: 20px 10px 10px 10px;
   text-align: center;
 
   transition: height 0.5s;
@@ -132,6 +133,14 @@ h4, h5 {
   padding: 20px;
 }
 
+  .header p {
+    color: #EEEEEE;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 240px;
+    text-align: center;
+  }
+
 .homeIcon {
   width: 64px;
 }
@@ -169,12 +178,14 @@ h4, h5 {
 }
 
 .question {
-  background-color: #666;
+  background-color: #23B7FB;
   border-bottom: 1px dotted white;
+  color: #EEEEEE;
   padding: 20px 10px;
 }
 
 .questionChoices {
+  background-color: #EEEEEE;
   padding: 0 10px;
 }
 

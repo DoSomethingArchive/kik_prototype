@@ -11,8 +11,7 @@ define(
   function($, _, Backbone, Storage, cards, template) {
     var ProfileView = Backbone.View.extend({
       events: {
-        'click h1': 'restart',
-        'click .headerIcon': 'restart',
+        'click .homeIcon': 'restart',
       },
 
       el: $('#page-content'),

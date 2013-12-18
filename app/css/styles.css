@@ -1,7 +1,18 @@
+@font-face {
+  font-family: ProximaNova;
+  src: url("ProximaNova-Reg.otf") format("opentype");
+}
+
+@font-face {
+  font-family: ProximaNova;
+  font-weight: bold;
+  src: url("ProximaNova-Bold.otf") format("opentype");
+}
+
 body {
   background-color: #333131;
   color: #f4f4f4;
-  font-family: 'Montserrat';
+  font-family: 'ProximaNova';
   margin: 0;
   padding: 0;
 }

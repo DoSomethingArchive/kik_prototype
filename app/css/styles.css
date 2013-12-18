@@ -10,8 +10,8 @@
 }
 
 body {
-  background-color: #333131;
-  color: #f4f4f4;
+  background-color: #EEEEEE;
+  color: #222222;
   font-family: 'ProximaNova';
   margin: 0;
   padding: 0;
@@ -88,10 +88,21 @@ h4, h5 {
   padding: 0 10px;
 }
 
-.dashboardIntro {
-  background-color: #666;
+.dashboardHeader {
+  background-color: #23B7FB;
   border-bottom: 1px dotted white;
+  color: #EEEEEE;
   padding: 20px 10px;
+  text-align: center;
+
+  transition: height 0.5s;
+  -webkit-transition: height 0.5s;
+}
+
+.dashboardIntro {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 240px;
 }
 
 .facepile {
@@ -111,20 +122,18 @@ h4, h5 {
 }
 
 .friendsListRow {
-  margin: 0 10px;
+  margin: 20px 10px 0 10px;
   text-align: center;
 }
+
 .header {
-  background-color: #666;
+  background-color: #23B7FB;
   margin: 0px;
-  padding: 30px 20px 20px 20px;
+  padding: 20px;
 }
 
-.headerIcon {
-  position: absolute;
-  right: 10px;
-  top: 30px;
-  width: 48px;
+.homeIcon {
+  width: 64px;
 }
 
 .nextQuestion {
@@ -148,6 +157,11 @@ h4, h5 {
 .profileFacepile {
   border-bottom: 1px solid white;
   padding-bottom: 10px;
+}
+
+.profileIcon {
+  float: right;
+  width: 48px;
 }
 
 .profileQuestion {

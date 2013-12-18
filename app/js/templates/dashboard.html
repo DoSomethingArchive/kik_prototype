@@ -1,14 +1,18 @@
-<h1 class="header">Kik Prototype</h1>
-<img src="img/me-icon.png" class="headerIcon"/>
+<div class="header">
+  <img src="img/ds-logo.png" class="homeIcon"/>
+  <img src="img/profile-icon.png" class="profileIcon"/>
+</div>
 
-<div class="dashboardIntro">
-  This is a prototype. Pick anywhere from 3 to 5 friends to get started. Don't worry, we won't be sending them any messages without you knowing.
+<div class="dashboardHeader">
+  <p class="dashboardIntro">
+    This is a prototype. Pick anywhere from 3 to 5 friends to get started. Don't worry, we won't be sending them any messages without you knowing.
+  </p>
+
+  <div class="button pickFriends" id="pickFriends">Pick Your Friends</div>
+  <div class="button startQuestions" id="startQuestions">Let's Start!</div>
 </div>
 
 <div class="dashboardContent">
-  <div class="button pickFriends" id="pickFriends">Pick Your Friends</div>
-  <div class="button startQuestions" id="startQuestions">Let's Start!</div>
-
   <div id="friends-list"></div>
 
   <div class="restart" id="reset" style="display:none">Reset</div>

@@ -27,9 +27,22 @@ define(
       render: function() {
         this.$el.empty();
         this.$el.append(_.template(tplDashboard));
+
+        // On initial render, header section should take up the entire screen
+        this.headerFillScreen();
+      },
+
+      headerFillScreen: function() {
+        var dashboardHeader = $('.dashboardHeader');
+        var headerHeight = $(window).height() - dashboardHeader.offset().top;
+
+        this.originalHeight = dashboardHeader.height();
+        dashboardHeader.height(headerHeight);
       },
 
       pickFriends: function() {
+        var view = this;
+
         if (cards.kik && cards.kik.pickUsers) {
           cards.kik.pickUsers({
               minResults: 3,
@@ -75,6 +88,10 @@ define(
               $('#pickFriends').hide();
               $('#startQuestions').show();
               $('#reset').show();
+
+              // Animate header section back to original height in order to reveal
+              // the selected friends section.
+              $('.dashboardHeader').css('height', view.originalHeight);
             }
           );
         }
@@ -106,6 +123,10 @@ define(
           $('#pickFriends').hide();
           $('#startQuestions').show();
           $('#reset').show();
+
+          // Animate header section back to original height in order to reveal
+          // the selected friends section.
+          $('.dashboardHeader').css('height', view.originalHeight);
         }
       },
 
@@ -194,6 +215,8 @@ define(
         $('#pickFriends').show();
         $('#startQuestions').hide();
         $('#reset').hide();
+
+        this.headerFillScreen();
       },
     });
 

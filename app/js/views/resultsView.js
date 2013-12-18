@@ -15,7 +15,7 @@ define(
     var ResultsView = Backbone.View.extend({
       events: {
         'click .nextQuestion': 'nextQuestion',
-        'click h1': 'restart',
+        'click .homeIcon': 'restart',
         'click .share': 'share',
       },
 

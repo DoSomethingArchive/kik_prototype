@@ -90,6 +90,8 @@ define(
        */
       showProfile: function() {
         var onModelFetched = function(model) {
+          $('#loading').hide();
+
           this.profileView = this.profileView || new ProfileView();
           this.profileView.render(model);
         };
@@ -111,6 +113,8 @@ define(
        */
       showQuestion: function(questionNum) {
         var onModelFetched = function(model) {
+          $('#loading').hide();
+
           this.questionView = this.questionView || new QuestionView();
           this.questionView.render(questionNum, model);
         };
@@ -131,6 +135,8 @@ define(
        */
       showResults: function(questionNum) {
         var onModelFetched = function(data) {
+          $('#loading').hide();
+
           this.resultsView = this.resultsView || new ResultsView();
           this.resultsView.render(questionNum, data);
         };

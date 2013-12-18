@@ -149,7 +149,7 @@ h4, h5 {
   background-color: #8cc026;
   border: 1px solid white;
   border-radius: 5px;
-  color: black;
+  color: #EEEEEE;
   margin: 20px 0;
   padding: 20px;
   text-align: center;
@@ -181,12 +181,12 @@ h4, h5 {
   background-color: #23B7FB;
   border-bottom: 1px dotted white;
   color: #EEEEEE;
-  padding: 20px 10px;
+  padding: 20px;
 }
 
 .questionChoices {
   background-color: #EEEEEE;
-  padding: 0 10px;
+  padding: 0 20px;
 }
 
 .restart {
@@ -250,6 +250,6 @@ h4, h5 {
   }
 
 .stat {
-  background-color: #666;
+  background-color: #755E98;
   border-bottom: 1px dotted white;
 }

@@ -236,17 +236,17 @@ h4, h5 {
   }
 
 .share {
-  background-color: #f6e816;
+  background-color: #23B7FB;
   border: 1px solid white;
   border-radius: 5px;
-  color: black;
+  color: #EEEEEE;
   margin: 20px 0;
   padding: 20px;
   text-align: center;
 }
 
   .share:hover {
-    background-color: #f7fa27;
+    background-color: #34C8FC;
   }
 
 .stat {

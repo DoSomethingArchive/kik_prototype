@@ -81,6 +81,10 @@ define(
                   viewData.results[i].selectedBy[j] = {};
                   viewData.results[i].selectedBy[j].username = selectedBy[qIndex][j].username;
                   viewData.results[i].selectedBy[j].thumbnail = selectedBy[qIndex][j].thumbnail;
+                  // If thumbnail is blank, use the default kik logo
+                  if (viewData.results[i].selectedBy[j].thumbnail == '') {
+                    viewData.results[i].selectedBy[j].thumbnail = 'img/kik-icon_256x256.png';
+                  }
                 }
               }
             }

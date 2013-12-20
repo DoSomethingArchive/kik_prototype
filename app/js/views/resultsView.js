@@ -107,6 +107,12 @@ define(
               if ($(id)) {
                 $(id).empty();
 
+                for (var i = 0; i < data.selected_by[question].length; i++) {
+                  if (data.selected_by[question][i].thumbnail == '') {
+                    data.selected_by[question][i].thumbnail = 'img/kik-icon_256x256.png';
+                  }
+                }
+
                 var tplData = {data: data.selected_by[question]};
                 $(id).append(_.template(tplSelectedBy, tplData));
               }

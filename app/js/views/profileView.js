@@ -12,6 +12,7 @@ define(
     var ProfileView = Backbone.View.extend({
       events: {
         'click .homeIcon': 'restart',
+        'click .facepile-item': 'showCaption',
       },
 
       el: $('#page-content'),
@@ -94,6 +95,13 @@ define(
             view.$el.append(_.template(template, viewData));
           }
         );
+      },
+
+      /**
+       * Show caption for the clicked on facepile image
+       */
+      showCaption: function(evt) {
+        AppRouter.showCaption(evt, this.$el);
       },
 
       /**

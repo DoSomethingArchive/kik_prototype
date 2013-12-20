@@ -22,7 +22,7 @@
           </div>
 
           <% for (var j = 0; j < results[i].selectedBy.length; j++) { %>
-            <img src="<%= results[i].selectedBy[j].thumbnail %>" class="facepile-item"/>
+            <img src="<%= results[i].selectedBy[j].thumbnail %>" class="facepile-item" alt="<%= results[i].selectedBy[j].username %>"/>
           <% } %>
         </div>
     <% } %>

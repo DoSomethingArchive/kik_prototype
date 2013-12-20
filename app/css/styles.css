@@ -75,6 +75,7 @@ h4, h5 {
   }
 
 .choiceImg {
+  background-color: #EEEEEE;
   border: 1px solid;
   height: 32px;
 }
@@ -108,6 +109,14 @@ h4, h5 {
 
 .facepile {
   margin-left: 10px;
+}
+
+.facepile-caption {
+  background-color: #23B7FB;
+  border-radius: 5px;
+  color: #EEEEEE;
+  padding: 5px;
+  position: absolute;
 }
 
 .facepile-item {

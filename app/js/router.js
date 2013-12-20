@@ -302,6 +302,42 @@ define(
         return this.getBaseUrl() + 'api/user';
       },
 
+      /**
+       * Show caption for the clicked on facepile image
+       */
+      showCaption: function(evt, el) {
+        if (evt && evt.currentTarget) {
+          var caption = $('#facepile-caption');
+          if (caption) {
+            caption.remove();
+          }
+
+          var img = $(evt.currentTarget);
+
+          // If this img already has an open caption, just close the caption and do nothing more
+          if (img.hasClass('caption-open')) {
+            img.removeClass('caption-open');
+          }
+          // Otherwise, open up a new caption!
+          else {
+            // First close any other img that has an open caption
+            var imgWithCaption = $('.caption-open');
+            if (imgWithCaption) {
+              imgWithCaption.removeClass('caption-open');
+            }
+
+            // Then add the open class to our img and create the caption
+            img.addClass('caption-open');
+
+            var username = img.attr('alt');
+            var caption = '<div id="facepile-caption" class="facepile-caption">' + username + '</div>';
+            el.append(caption);
+
+            $('#facepile-caption').offset({top: img.position().top - 30, left: img.position().left + 16});
+          }
+        }
+      },
+
 
     });
 

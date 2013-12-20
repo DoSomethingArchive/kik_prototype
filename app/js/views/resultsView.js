@@ -17,6 +17,7 @@ define(
         'click .nextQuestion': 'nextQuestion',
         'click .homeIcon': 'restart',
         'click .share': 'share',
+        'click .facepile-item': 'showCaption',
       },
 
       // After how many consecutive questions do we show the share button
@@ -216,6 +217,13 @@ define(
             'data': {question: question},
           });
         }
+      },
+
+      /**
+       * Show caption for the clicked on facepile image
+       */
+      showCaption: function(evt) {
+        AppRouter.showCaption(evt, this.$el);
       },
 
     });

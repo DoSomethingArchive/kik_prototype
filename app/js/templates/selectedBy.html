@@ -1,6 +1,6 @@
 <%  if (data.length > 0) {
       for (var index = 0; index < data.length; index++) { %>
-        <img class="facepile-item" src="<%= data[index].thumbnail %>"/>
+        <img class="facepile-item" src="<%= data[index].thumbnail %>" alt="<%= data[index].username %>"/>
 <%    }
     } else { %>
       Nobody...

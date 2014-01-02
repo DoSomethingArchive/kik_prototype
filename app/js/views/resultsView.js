@@ -18,6 +18,7 @@ define(
         'click .homeIcon': 'restart',
         'click .share': 'share',
         'click .facepile-item': 'showCaption',
+        'click .profileIcon': 'profile',
       },
 
       // After how many consecutive questions do we show the share button
@@ -198,6 +199,13 @@ define(
             console.dir(jqXHR);
           }
         );
+      },
+
+      /**
+       * Go to the profile screen.
+       */
+      profile: function(evt) {
+        AppRouter.goToProfile();
       },
 
       /**

@@ -169,12 +169,12 @@ h4, h5 {
   }
 
 .profileContent {
-  margin: 0 10px;
+  margin: 0;
 }
 
 .profileFacepile {
   border-bottom: 1px solid white;
-  padding-bottom: 10px;
+  padding: 10px;
 }
 
 .profileIcon {
@@ -183,7 +183,8 @@ h4, h5 {
 }
 
 .profileQuestion {
-  margin: 20px 0;
+  background-color: #ddd;
+  padding: 20px 10px;
 }
 
 .question {

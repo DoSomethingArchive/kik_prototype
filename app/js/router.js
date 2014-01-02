@@ -34,6 +34,11 @@ define(
           cards.metrics.enableGoogleAnalytics();
         }
 
+        // Custom back button handling
+        if (cards.browser) {
+          cards.browser.back(this.handleBackButton);
+        }
+
         // Bind routing events to track page views
         return this.bind('route', this._trackPageview);
       },
@@ -45,6 +50,14 @@ define(
         var url;
         url = Backbone.history.getFragment();
         return ga('send', 'pageview', '/#' + url);
+      },
+
+      /**
+       * Handle back button presses within the Kik app.
+       */
+      handleBackButton: function() {
+        window.history.back();
+        return false;
       },
 
       /**

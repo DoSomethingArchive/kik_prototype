@@ -3,6 +3,14 @@ define(function() {
     keyBase: '_ds_kik_',
 
     /**
+     * Remove the saved list of selected friends.
+     */
+    clearFriendsList: function() {
+      var key = this.keyBase + 'friends_list';
+      localStorage.removeItem(key);
+    },
+
+    /**
      * Get the list of friends selected.
      *
      * @return array

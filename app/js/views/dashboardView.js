@@ -30,6 +30,11 @@ define(
 
         // On initial render, header section should take up the entire screen
         this.headerFillScreen();
+
+        var friends = Storage.getFriendsList();
+        if (friends) {
+          this.displayFriends(friends, this);
+        }
       },
 
       headerFillScreen: function() {
@@ -78,20 +83,7 @@ define(
               // Save users to localStorage for later use in questions
               Storage.setFriendsList(users);
 
-              // Update the display with the selected friends
-              var data = {users: users};
-              var friendsList = $('#friends-list');
-              friendsList.empty();
-              friendsList.append(_.template(tplFriendsList, data));
-
-              // Hide the friend picker button and show the button to get started
-              $('#pickFriends').hide();
-              $('#startQuestions').show();
-              $('#reset').show();
-
-              // Animate header section back to original height in order to reveal
-              // the selected friends section.
-              $('.dashboardHeader').css('height', view.originalHeight);
+              view.displayFriends(users, view);
             }
           );
         }
@@ -128,6 +120,29 @@ define(
           // the selected friends section.
           $('.dashboardHeader').css('height', view.originalHeight);
         }
+      },
+
+      /**
+       * Display the friends section of the page.
+       *
+       * @param friends Array of friend data to display
+       * @param view View handle
+       */
+      displayFriends: function(friends, view) {
+        // Update the display with the selected friends
+        var data = {users: friends};
+        var friendsList = $('#friends-list');
+        friendsList.empty();
+        friendsList.append(_.template(tplFriendsList, data));
+
+        // Hide the friend picker button and show the button to get started
+        $('#pickFriends').hide();
+        $('#startQuestions').show();
+        $('#reset').show();
+
+        // Animate header section back to original height in order to reveal
+        // the selected friends section.
+        $('.dashboardHeader').css('height', view.originalHeight);
       },
 
       startQuestions: function() {
@@ -215,6 +230,8 @@ define(
         $('#pickFriends').show();
         $('#startQuestions').hide();
         $('#reset').hide();
+
+        Storage.clearFriendsList();
 
         this.headerFillScreen();
       },
